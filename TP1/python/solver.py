@@ -58,7 +58,7 @@ while len(F) > 0 and not solved:
     # DFS
     curr = F.pop()
 
-    # curr.state.printState(maze)
+    curr.state.printState(maze)
 
     if curr.state.checkFinal(gS):
         solutionNode = curr

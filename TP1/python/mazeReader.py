@@ -6,7 +6,7 @@ class MazeReader:
         self.Tr = Node()
         self.Q0 = []
         self.goalSquares = []
-        file = open('../maps/map1')
+        file = open('../maps/map2')
         lines = file.readlines()
         boxes = []
         for num, line in enumerate(lines):
@@ -27,6 +27,14 @@ class MazeReader:
                 boxes.extend(js)
                 for j in js:
                     line[j[1]] = ' '
+            except ValueError:
+                self
+            try:
+                js = [ (num, i) for i, elem in enumerate(line) if elem == '*']
+                boxes.extend(js)
+                self.goalSquares.extend(js)
+                for j in js:
+                    line[j[1]] = '.'
             except ValueError:
                 self
             self.Q0.append(line)
