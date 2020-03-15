@@ -39,6 +39,16 @@ def findNextStates(curr, goalSquares, maze, E):
                         newStates.append(Node(p=curr, state=toBeAdded, g=curr.g + moveCost))
         return newStates
 
+##Config File Reader##
+file = open('../solver.config')
+file_content = file.readlines()
+vec = []
+for line in file_content:
+    mylist = list(line)
+    mylist.pop()
+    vec.append(mylist.pop())
+#####
+
 mr = MazeReader()
 
 Tr = mr.Tr
