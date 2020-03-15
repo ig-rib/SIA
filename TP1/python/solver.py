@@ -5,6 +5,7 @@ from state import State
 from mazeReader import MazeReader
 import heapq
 from collections import deque
+from math import sqrt
 
 def findNextStates(curr, goalSquares, maze, E):
         boxes = curr.state.boxes
@@ -39,24 +40,36 @@ def findNextStates(curr, goalSquares, maze, E):
                         newStates.append(Node(p=curr, state=toBeAdded, g=curr.g + moveCost))
         return newStates
 
+
 mr = MazeReader()
 
 Tr = mr.Tr
 maze = mr.Q0
 gS = mr.goalSquares
 
-F = deque()
+def f(node):
+    return node.g + node.h(node.state)
+
+def h(node):
+    # sum = [0, 0]
+    # for box in node.boxes:
+    #     sum[0] += box[0] - gS[0][0]
+    #     sum[1] += box[1] - gS[0][1]
+    # return sqrt(sum[0]**2 + sum[1]**2)
+    return 0
+F = []
 E = []
 F.append(Tr)
 E.append(Tr.state)
 solved = False
+Tr.f = f
 while len(F) > 0 and not solved:
     # Uniform Cost Search
-    # curr = heapq.heappop(F)
+    curr = heapq.heappop(F)
     # BFS
     # curr = F.popleft()
     # DFS
-    curr = F.pop()
+    # curr = F.pop()
 
     curr.state.printState(maze)
 
@@ -66,11 +79,13 @@ while len(F) > 0 and not solved:
     else:
         newNodes = findNextStates(curr, gS, maze, E)
         for node in newNodes:
+            node.f = f
+            node.h = h
             curr.children.append(node)
             # Uniform Cost Search
-            # heapq.heappush(F, node)
+            heapq.heappush(F, node)
             # BFS, DFS
-            F.append(node)
+            # F.append(node)
 if solved:
     p = solutionNode
     path = deque()

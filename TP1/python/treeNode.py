@@ -7,17 +7,17 @@ class Node:
         self.f = f
 
     def __eq__(self, value):
-        return self.g == value.g
+        return self.f(self) == value.f(value)
     def __ge__(self, value):
-        return self.g >= value.g
+        return self.f(self) >= value.f(value)
     def __gt__(self, value):
-        return self.g > value.g
+        return self.f(self) > value.f(value)
     def __le__(self, value):
-        return self.g <= value.g
+        return self.f(self) <= value.f(value)
     def __lt__(self, value):
-        return self.g < value.g
+        return self.f(self) < value.f(value)
     def __ne__(self, value):
-        return self.g != value.g
+        return self.f(self) != value.f(value)
         
     def __repr__(self):
         return "(%s, %s, %s)" % (self.p, self.g)
