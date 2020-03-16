@@ -4,6 +4,7 @@ from treeNode import Node
 from state import State
 from mazeReader import MazeReader
 import heapq
+import sys
 from collections import deque
 from math import sqrt
 
@@ -40,6 +41,15 @@ def findNextStates(curr, goalSquares, maze, E):
                         newStates.append(Node(p=curr, state=toBeAdded, g=curr.g + moveCost))
         return newStates
 
+# ##Config File Reader##
+# file = open('../solver.config')
+# file_content = file.readlines()
+# vec = []
+# for line in file_content:
+#     mylist = list(line)
+#     mylist.pop()
+#     vec.append(mylist.pop())
+# #####
 
 mr = MazeReader()
 
@@ -48,15 +58,18 @@ maze = mr.Q0
 gS = mr.goalSquares
 
 def f(node):
-    return node.g + node.h(node.state)
+    return node.g + node.h
 
-def h(node):
-    # sum = [0, 0]
-    # for box in node.boxes:
-    #     sum[0] += box[0] - gS[0][0]
-    #     sum[1] += box[1] - gS[0][1]
-    # return sqrt(sum[0]**2 + sum[1]**2)
-    return 0
+def h(state):
+    sum = 0
+    for box in state.boxes:
+        min = sys.maxsize
+        for g in gS:
+            md = abs(g[0]-box[0]) + abs(g[1]-box[1])
+            if md < min:
+                min = md
+        sum += min
+    return sum
 F = []
 E = []
 F.append(Tr)
@@ -80,7 +93,7 @@ while len(F) > 0 and not solved:
         newNodes = findNextStates(curr, gS, maze, E)
         for node in newNodes:
             node.f = f
-            node.h = h
+            node.h = h(node.state)
             curr.children.append(node)
             # Uniform Cost Search
             heapq.heappush(F, node)
