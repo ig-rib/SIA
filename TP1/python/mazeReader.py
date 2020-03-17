@@ -2,11 +2,11 @@ from treeNode import Node
 from state import State
 
 class MazeReader:
-    def __init__(self):
+    def __init__(self, mapPath):
         self.Tr = Node()
         self.Q0 = []
         self.goalSquares = []
-        file = open('maps/map6')
+        file = open(mapPath)
         lines = file.readlines()
         boxes = []
         for num, line in enumerate(lines):
