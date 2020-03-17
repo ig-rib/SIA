@@ -60,9 +60,17 @@ Tr.g = 0
 maze = mr.Q0
 gS = mr.goalSquares
 
-def f(node):
-    return node.g + node.h
+BFS = False
+id = False
+A = False
+GG = True
 
+if not GG:
+    def f(node):
+        return node.g + node.h
+else:
+    def f(node):
+        return node.h
 def h(state):
     sum = 0
     for box in state.boxes:
@@ -79,9 +87,6 @@ Tr.f = f
 
 start = dt.datetime.now()
 
-BFS = True
-id = False
-A = False
 
 if BFS:
     F = deque()
@@ -95,7 +100,7 @@ if not id:
     Tr.f = f
     while len(F) > 0 and not solved:
         # # Uniform Cost Search
-        if A:
+        if A or GG:
             curr = heapq.heappop(F)
         # BFS
         elif BFS:
@@ -115,7 +120,7 @@ if not id:
                 node.h = h(node.state)
                 curr.children.append(node)
                 # Uniform Cost Search
-                if A:
+                if A or GG:
                     heapq.heappush(F, node)
                 # BFS, DFS
                 else:
