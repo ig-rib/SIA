@@ -43,14 +43,19 @@ def findNextStates(curr, goalSquares, maze, E):
         return newStates
 
 # ##Config File Reader##
-# file = open('../solver.config')
-# file_content = file.readlines()
-# vec = []
-# for line in file_content:
-#     mylist = list(line)
-#     mylist.pop()
-#     vec.append(mylist.pop())
-# #####
+file = open('solver.config')
+file_content = file.readlines()
+settings = {}
+selected = False
+for line in file_content:
+    mylist = deque(line.rstrip().split(" "))
+    current = settings[mylist.popleft()] = mylist.pop() == '1'
+    if selected and current:
+        print("Please select only one method")
+        exit(1)
+    else:
+        selected = current
+#####
 
 if len(sys.argv) != 2:
     print("Usage: solver.py [mazefile]")
@@ -63,10 +68,10 @@ Tr.g = 0
 maze = mr.Q0
 gS = mr.goalSquares
 
-BFS = False
-id = False
-A = False
-GG = True
+BFS = settings['BFS']
+id = settings['IDDFS'] or settings['IDA*']
+A = settings['A*'] or settings['IDA*']
+GG = settings['GG']
 
 if not GG:
     def f(node):
@@ -187,8 +192,8 @@ if solved:
     while p is not None:
         path.appendleft(p.state)
         p = p.p
-    for state in path:
-        state.printState(maze)
+    # for state in path:
+    #     state.printState(maze)
     print("Total cost: %ld\nSolution Depth: %ld\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
     % (solutionNode.g, len(path), len(E), len(F)))
     print(totalTime.total_seconds())
