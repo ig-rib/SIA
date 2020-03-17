@@ -192,8 +192,10 @@ if solved:
     while p is not None:
         path.appendleft(p.state)
         p = p.p
-    # for state in path:
-    #     state.printState(maze)
+        
+    for state in path:
+        state.printState(maze)
+
     print("Total cost: %ld\nSolution Depth: %ld\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
     % (solutionNode.g, len(path), len(E), len(F)))
     print(totalTime.total_seconds())
