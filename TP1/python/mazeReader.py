@@ -6,7 +6,7 @@ class MazeReader:
         self.Tr = Node()
         self.Q0 = []
         self.goalSquares = []
-        file = open('maps/map1')
+        file = open('maps/map6')
         lines = file.readlines()
         boxes = []
         for num, line in enumerate(lines):
