@@ -9,12 +9,12 @@ class ConfigFileReader():
         for line in file_content:
             mylist = deque(line.rstrip().split(" "))
             name = mylist.popleft()
-            current = settings[name] = mylist.pop() == '1'
+            current = settings[name] = (mylist.pop() == '1')
             if name not in ['PrintState', 'CornerSense', 'H']:
+                if selected and current:
+                    print("Please select only one method")
+                    exit(1)
                 selected = current
-            elif selected and current:
-                print("Please select only one method")
-                exit(1)
         self.settings = settings
     
     def getSettings(self):
