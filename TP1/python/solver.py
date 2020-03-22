@@ -44,139 +44,140 @@ def findNextStates(curr, goalSquares, maze, E):
                         newStates.append(Node(p=curr, state=toBeAdded, g=curr.g + moveCost))
         return newStates
 
-cfr = ConfigFileReader('solver.config')
-settings = cfr.getSettings()
+class Solver:
 
-if len(sys.argv) != 2:
-    print("Usage: solver.py [mazefile]")
+    def __init__(self, settings):
+        self.settings = settings
 
-mr = MazeReader(sys.argv[1])
+    def solve(self, mazeFile):
 
-Tr = mr.Tr
-Tr.g = 0
+        mr = MazeReader(mazeFile)
 
-maze = mr.Q0
-gS = mr.goalSquares
+        Tr = mr.Tr
+        Tr.g = 0
 
-BFS = settings['BFS']
-id = settings['IDDFS'] or settings['IDA*']
-A = settings['A*'] or settings['IDA*']
-GG = settings['GG']
-H = settings['H']
+        maze = mr.Q0
+        gS = mr.goalSquares
 
-if not GG:
-    def f(node):
-        return node.g + node.h
-else:
-    def f(node):
-        return node.h
+        BFS = self.settings['BFS']
+        id = self.settings['IDDFS'] or self.settings['IDA*']
+        A = self.settings['A*'] or self.settings['IDA*']
+        GG = self.settings['GG']
+        H = self.settings['H']
 
-heuristicsFactory = HeuristicsFactory(H, gS)
-h = heuristicsFactory.getHeuristic()
-
-Tr.h = h(Tr.state)
-Tr.f = f
-
-start = dt.datetime.now()
-
-if BFS:
-    F = deque()
-else:
-    F = []
-E = []
-F.append(Tr)
-E.append(Tr.state)
-if not id:
-    solved = False
-    Tr.f = f
-    while len(F) > 0 and not solved:
-        # # Uniform Cost Search
-        if A or GG:
-            curr = heapq.heappop(F)
-        # BFS
-        elif BFS:
-            curr = F.popleft()
-        # DFS
+        if not GG:
+            def f(node):
+                return node.g + node.h
         else:
-            curr = F.pop()
-        # curr.state.printState(maze)
-        if curr.state.checkFinal(gS):
-            solutionNode = curr
-            solved = True
-            totalTime = dt.datetime.now() - start
+            def f(node):
+                return node.h
+
+        heuristicsFactory = HeuristicsFactory(H, gS)
+        h = heuristicsFactory.getHeuristic()
+
+        Tr.h = h(Tr.state)
+        Tr.f = f
+
+        start = dt.datetime.now()
+
+        if BFS:
+            F = deque()
         else:
-            newNodes = findNextStates(curr, gS, maze, E)
-            for node in newNodes:
-                node.f = f
-                node.h = h(node.state)
-                curr.children.append(node)
-                # Uniform Cost Search
+            F = []
+        E = []
+        F.append(Tr)
+        E.append(Tr.state)
+        if not id:
+            solved = False
+            Tr.f = f
+            while len(F) > 0 and not solved:
+                # # Uniform Cost Search
                 if A or GG:
-                    heapq.heappush(F, node)
-                # BFS, DFS
+                    curr = heapq.heappop(F)
+                # BFS
+                elif BFS:
+                    curr = F.popleft()
+                # DFS
                 else:
-                    F.append(node)
-
-elif not A: # iddfs
-
-    limit = Tr.f(Tr)
-    solved = False
-    while limit < 1000 and not solved:
-        F = []
-        F.append([Tr, limit])
-        while len(F)>0 and not solved:
-            [curr, lim] = F.pop()
-            # curr.state.printState(maze)
-            if lim <= 0:
-                False
-            elif curr.state.checkFinal(gS):
-                solutionNode = curr
-                solved = True
-                totalTime = dt.datetime.now() - start
-            else:
-                if len(curr.children) > 0:
-                    newNodes = curr.children
-                else:
-                    newNodes = findNextStates(curr, gS, maze, E)
-                    curr.children.extend(newNodes)
-                F.extend([[node, lim-1] for node in newNodes])
-        limit += 50
-
-else: # ida*
-    solved = False
-    limit = Tr.f(Tr)
-    while limit < 1000 and not solved:
-        F = []
-        candidates = []
-        heapq.heappush(F, Tr)
-        while len(F)>0 and not solved:
-            curr = heapq.heappop(F)
-            # curr.state.printState(maze)
-            if curr.f(curr) > limit:
-                candidates.append(curr.f(curr))
-            elif curr.state.checkFinal(gS):
-                solutionNode = curr
-                solved = True
-                totalTime = dt.datetime.now() - start
-            else:
-                if len(curr.children) > 0:
-                    newNodes = curr.children
+                    curr = F.pop()
+                # curr.state.printState(maze)
+                if curr.state.checkFinal(gS):
+                    solutionNode = curr
+                    solved = True
+                    totalTime = dt.datetime.now() - start
                 else:
                     newNodes = findNextStates(curr, gS, maze, E)
                     for node in newNodes:
-                        node.h = h(node.state)
                         node.f = f
-                    curr.children.extend(newNodes)
-                F.extend(newNodes)
-        limit = min(candidates)
-if solved:
-    p = solutionNode
-    path = deque()
-    while p is not None:
-        path.appendleft(p.state)
-        p = p.p
-    # for state in path:
-    #     state.printState(maze)
-    print("Total cost: %ld\nSolution Depth: %ld\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
-    % (solutionNode.g, len(path), len(E), len(F)))
-    print(totalTime.total_seconds())
+                        node.h = h(node.state)
+                        curr.children.append(node)
+                        # Uniform Cost Search
+                        if A or GG:
+                            heapq.heappush(F, node)
+                        # BFS, DFS
+                        else:
+                            F.append(node)
+
+        elif not A: # iddfs
+
+            limit = Tr.f(Tr)
+            solved = False
+            while limit < 1000 and not solved:
+                F = []
+                F.append([Tr, limit])
+                while len(F)>0 and not solved:
+                    [curr, lim] = F.pop()
+                    # curr.state.printState(maze)
+                    if lim <= 0:
+                        False
+                    elif curr.state.checkFinal(gS):
+                        solutionNode = curr
+                        solved = True
+                        totalTime = dt.datetime.now() - start
+                    else:
+                        if len(curr.children) > 0:
+                            newNodes = curr.children
+                        else:
+                            newNodes = findNextStates(curr, gS, maze, E)
+                            curr.children.extend(newNodes)
+                        F.extend([[node, lim-1] for node in newNodes])
+                limit += 50
+
+        else: # ida*
+            solved = False
+            limit = Tr.f(Tr)
+            while limit < 1000 and not solved:
+                F = []
+                candidates = []
+                heapq.heappush(F, Tr)
+                while len(F)>0 and not solved:
+                    curr = heapq.heappop(F)
+                    # curr.state.printState(maze)
+                    if curr.f(curr) > limit:
+                        candidates.append(curr.f(curr))
+                    elif curr.state.checkFinal(gS):
+                        solutionNode = curr
+                        solved = True
+                        totalTime = dt.datetime.now() - start
+                    else:
+                        if len(curr.children) > 0:
+                            newNodes = curr.children
+                        else:
+                            newNodes = findNextStates(curr, gS, maze, E)
+                            for node in newNodes:
+                                node.h = h(node.state)
+                                node.f = f
+                            curr.children.extend(newNodes)
+                        F.extend(newNodes)
+                limit = min(candidates)
+        if solved:
+            p = solutionNode
+            path = deque()
+            while p is not None:
+                path.appendleft(p.state)
+                p = p.p
+            # for state in path:
+            #     state.printState(maze)
+            print("Total cost: %ld\nSolution Depth: %ld\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
+            % (solutionNode.g, len(path), len(E), len(F)))
+            print(totalTime.total_seconds())
