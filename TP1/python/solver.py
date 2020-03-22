@@ -11,7 +11,7 @@ from collections import deque
 from math import sqrt
 import datetime as dt
 
-def findNextStates(curr, goalSquares, maze, E):
+def findNextStates(curr, goalSquares, maze, E, cornerSense = False):
         boxes = curr.state.boxes
         user = curr.state.user
         newStates = []
@@ -40,7 +40,7 @@ def findNextStates(curr, goalSquares, maze, E):
                 toBeAdded = State(newBoxes, newUser)
                 if not toBeAdded in E:
                     E.append(toBeAdded)
-                    if not toBeAdded.hasUnmovableBox(maze, goalSquares):
+                    if not cornerSense or not toBeAdded.hasUnmovableBox(maze, goalSquares):
                         newStates.append(Node(p=curr, state=toBeAdded, g=curr.g + moveCost))
         return newStates
 
@@ -100,13 +100,14 @@ class Solver:
                 # DFS
                 else:
                     curr = F.pop()
-                # curr.state.printState(maze)
+                if self.settings['PrintState'] == 1:
+                    curr.state.printState(maze)
                 if curr.state.checkFinal(gS):
                     solutionNode = curr
                     solved = True
                     totalTime = dt.datetime.now() - start
                 else:
-                    newNodes = findNextStates(curr, gS, maze, E)
+                    newNodes = findNextStates(curr, gS, maze, E, self.settings['CornerSense'])
                     for node in newNodes:
                         node.f = f
                         node.h = h(node.state)
@@ -127,7 +128,8 @@ class Solver:
                 F.append([Tr, limit])
                 while len(F)>0 and not solved:
                     [curr, lim] = F.pop()
-                    # curr.state.printState(maze)
+                    if self.settings['PrintState'] == 1:
+                        curr.state.printState(maze)
                     if lim <= 0:
                         False
                     elif curr.state.checkFinal(gS):
@@ -138,7 +140,7 @@ class Solver:
                         if len(curr.children) > 0:
                             newNodes = curr.children
                         else:
-                            newNodes = findNextStates(curr, gS, maze, E)
+                            newNodes = findNextStates(curr, gS, maze, E, self.settings['CornerSense'])
                             curr.children.extend(newNodes)
                         F.extend([[node, lim-1] for node in newNodes])
                 limit += 50
@@ -152,7 +154,8 @@ class Solver:
                 heapq.heappush(F, Tr)
                 while len(F)>0 and not solved:
                     curr = heapq.heappop(F)
-                    # curr.state.printState(maze)
+                    if self.settings['PrintState'] == 1:
+                        curr.state.printState(maze)
                     if curr.f(curr) > limit:
                         candidates.append(curr.f(curr))
                     elif curr.state.checkFinal(gS):
@@ -163,7 +166,7 @@ class Solver:
                         if len(curr.children) > 0:
                             newNodes = curr.children
                         else:
-                            newNodes = findNextStates(curr, gS, maze, E)
+                            newNodes = findNextStates(curr, gS, maze, E, self.settings['CornerSense'])
                             for node in newNodes:
                                 node.h = h(node.state)
                                 node.f = f
@@ -176,8 +179,8 @@ class Solver:
             while p is not None:
                 path.appendleft(p.state)
                 p = p.p
-            # for state in path:
-            #     state.printState(maze)
+            for state in path:
+                state.printState(maze)
             print("Total cost: %ld\nSolution Depth: %ld\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
             % (solutionNode.g, len(path), len(E), len(F)))
             print(totalTime.total_seconds())
