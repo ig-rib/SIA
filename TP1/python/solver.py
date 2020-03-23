@@ -91,7 +91,7 @@ class Solver:
             solved = False
             Tr.f = f
             while len(F) > 0 and not solved:
-                # # Uniform Cost Search
+                # # A* or Global Greedy
                 if A or GG:
                     curr = heapq.heappop(F)
                 # BFS
@@ -102,6 +102,7 @@ class Solver:
                     curr = F.pop()
                 if self.settings['PrintState'] == 1:
                     curr.state.printState(maze)
+                    print(curr.f(curr))
                 if curr.state.checkFinal(gS):
                     solutionNode = curr
                     solved = True
@@ -112,7 +113,7 @@ class Solver:
                         node.f = f
                         node.h = h(node.state)
                         curr.children.append(node)
-                        # Uniform Cost Search
+                        # A* or Global Greedy
                         if A or GG:
                             heapq.heappush(F, node)
                         # BFS, DFS
@@ -130,6 +131,7 @@ class Solver:
                     [curr, lim] = F.pop()
                     if self.settings['PrintState'] == 1:
                         curr.state.printState(maze)
+                        # print(curr.f(curr))
                     if lim <= 0:
                         False
                     elif curr.state.checkFinal(gS):
@@ -156,6 +158,7 @@ class Solver:
                     curr = heapq.heappop(F)
                     if self.settings['PrintState'] == 1:
                         curr.state.printState(maze)
+                        print(curr.f(curr))
                     if curr.f(curr) > limit:
                         candidates.append(curr.f(curr))
                     elif curr.state.checkFinal(gS):
