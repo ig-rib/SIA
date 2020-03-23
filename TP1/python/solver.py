@@ -182,6 +182,8 @@ class Solver:
                 p = p.p
             for state in path:
                 state.printState(maze)
+                print("&&")
+
             print("Total cost: %ld\nSolution Depth: %ld\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
             % (solutionNode.g, len(path), len(E), len(F)))
             print(totalTime.total_seconds())
