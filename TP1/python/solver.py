@@ -172,7 +172,8 @@ class Solver:
                                 node.f = f
                             curr.children.extend(newNodes)
                         F.extend(newNodes)
-                limit = min(candidates)
+                if not solved:
+                    limit = min(candidates)
         if solved:
             p = solutionNode
             path = deque()
