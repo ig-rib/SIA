@@ -1,0 +1,15 @@
+out_file;cost;depth;exp_nodes;frontier;time;
+BFS-easy2.txt;76;53;67201;729;3003,858171;
+DFS-easy2.txt;1760;908;14206;833;106,658031;
+H0-Astar-easy2.txt;76;53;50796;4649;1380,314209;
+H0-gg-easy2.txt;80;55;1205;100;1,050204;
+H0-IDAstar-easy2.txt;
+H0-IDDFS-easy2.txt;102;66;15500;58;104,885105;
+H1-Astar-easy2.txt;94;62;61748;2945;2448,1551;
+H1-gg-easy2.txt;88;59;9424;988;46,614894;
+H1-IDAstar-easy2.txt;
+H1-IDDFS-easy2.txt;124;80;20972;88;208,568445;
+H2-Astar-easy2.txt;76;53;50796;4649;1397,109735;
+H2-gg-easy2.txt;80;55;1205;100;1,024764;
+H2-IDAstar-easy2.txt;
+H2-IDDFS-easy2.txt;102;66;15500;58;101,865731;
