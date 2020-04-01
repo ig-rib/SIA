@@ -9,6 +9,8 @@ git clone https://bitbucket.org/itba/sia-2020-1c-02.git && cd TP1
 chmod +x ./all.sh
 ./all.sh [MAP_NAME]
 ```
+Las respuestas apareceran en la carpeta `test`, y las estadisticas en formato csv en `stats`
+
 Otra opción es realizar la configuración deseada en `solver.config` y ejecutar
 
 ```bash
@@ -42,6 +44,18 @@ Ejecutamos de la siguiente manera
 
 ```bash
 ./run.sh easy
+```
+
+## Visual
+
+Para visualizar el resultado de una manera animatda ejectuamos
+
+Los archivos de test poseen el formato:
+`[ALG]-[MAP_NAME].txt` o `H[0-2]-[ALG]-[MAP_NAME].txt` en el caso de los algoritmos de busqueda informados. 
+
+```bash
+chmod +x ./visual.sh
+./visual.sh BFS-easy.txt
 ```
 
 ## Autores
