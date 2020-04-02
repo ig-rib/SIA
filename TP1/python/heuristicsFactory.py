@@ -22,7 +22,7 @@ class HeuristicsFactory:
                         if md < min:
                             min = md
                     sum += min
-                sum += min([abs(b[0]-state.user[0]) + abs(b[1]-state.user[1]) for b in state.boxes])
+                sum += min([abs(b[0]-state.user[0]) + abs(b[1]-state.user[1]) for b in state.boxes]) -1
                 return sum
         if H==2:
             def h(state):
