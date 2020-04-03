@@ -5,24 +5,24 @@ class HeuristicsFactory:
             def h(state):
                 sum = 0
                 for box in state.boxes:
-                    min = sys.maxsize
+                    mini = sys.maxsize
                     for g in gS:
                         md = abs(g[0]-box[0]) + abs(g[1]-box[1])
-                        if md < min:
-                            min = md
-                    sum += min
+                        if md < mini:
+                            mini = md
+                    sum += mini
                 return sum
         if H==1:
             def h(state):
                 sum = 0
                 for box in state.boxes:
-                    min = sys.maxsize
+                    mini = sys.maxsize
                     for g in gS:
                         md = abs(g[0]-box[0]) + abs(g[1]-box[1])
-                        if md < min:
+                        if md < mini:
                             min = md
-                    sum += min
-                sum += (min([abs(b[0]-state.user[0]) + abs(b[1]-state.user[1]) for b in state.boxes]))-1
+                    sum += mini
+                sum += min([abs(b[0]-state.user[0]) + abs(b[1]-state.user[1]) for b in state.boxes])
                 return sum
         if H==2:
             def h(state):
