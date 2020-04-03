@@ -177,4 +177,4 @@ Total cost: 34
 Solution Depth: 25
 Expanded Nodes: 781
 Remaining Frontier: 85
-0.30634
+0.268998

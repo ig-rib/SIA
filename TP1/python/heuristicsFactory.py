@@ -20,7 +20,7 @@ class HeuristicsFactory:
                     for g in gS:
                         md = abs(g[0]-box[0]) + abs(g[1]-box[1])
                         if md < mini:
-                            min = md
+                            mini = md
                     sum += mini
                 sum += min([abs(b[0]-state.user[0]) + abs(b[1]-state.user[1]) for b in state.boxes])
                 return sum
