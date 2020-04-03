@@ -10,7 +10,7 @@ class ConfigFileReader():
             mylist = deque(line.rstrip().split(" "))
             name = mylist.popleft()
             current = settings[name] = (mylist.pop() == '1')
-            if name not in ['PrintState', 'CornerSense', 'H']:
+            if name not in ['PrintState', 'CornerSense', 'H', 'IDDFS-Step']:
                 if selected and current:
                     print("Please select only one method")
                     exit(1)

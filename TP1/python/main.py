@@ -6,7 +6,7 @@ from solver import Solver
 import sys
 
 if len(sys.argv) != 2:
-    print("Usage: solver.py [mazefile]")
+    print("Usage: main.py [mazefile]")
 else:
     cfr = ConfigFileReader('solver.config')
     settings = cfr.getSettings()

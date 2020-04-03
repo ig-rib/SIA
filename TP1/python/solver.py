@@ -64,7 +64,7 @@ class Solver:
         A = self.settings['A*'] or self.settings['IDA*']
         GG = self.settings['GG']
         H = self.settings['H']
-
+        depthStep = self.settings['IDDFS-Step']
         if not GG:
             def f(node):
                 return node.g + node.h
@@ -121,7 +121,7 @@ class Solver:
 
         elif not A: # iddfs
 
-            limit = Tr.f(Tr)
+            limit = 1
             solved = False
             while limit < 1000 and not solved:
                 F = []
@@ -143,7 +143,7 @@ class Solver:
                             newNodes = findNextStates(curr, gS, maze, E, self.settings['CornerSense'])
                             curr.children.extend(newNodes)
                         F.extend([[node, lim-1] for node in newNodes])
-                limit += 50
+                limit += depthStep
 
         else: # ida*
             solved = False
