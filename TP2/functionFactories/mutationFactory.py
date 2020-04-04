@@ -6,14 +6,16 @@ class MutationFactory:
                 
         if type == 'GEN':
             def performMutation(children):
-
+                return None
         elif type == 'LIM-MULTIGEN':
             def performMutation(children):
-
+                return None
         elif type == 'UNIFORM-MULTIGEN':
             def performMutation(children):
+                return None
         elif type == 'COMPLETE':
             def performMutation(children):
+                return None
         else:
             print('Invalid Mutation Type')
             exit(1)

@@ -1,13 +1,20 @@
 #!/bin/python3
 
-class CrossingOverFactory:
+import constants as ct
+
+class ImplementationFactory:
 
     def __init__(self, type):
-        if type == 'SINGLE-POINT':
+        if type == 'FILL-PARENT':
             def implement(parents, children):
-
-        elif type == 'TWO-POINT':
+                if len(children) >= len(parents):
+                    return [ct.oneArray, children]
+                children.extend(parents)
+                return [ct.childrenAndParents, children, parents]
+        elif type == 'FILL-ALL':
             def implement(parents, children):
+                children.extend(parents)
+                return [ct.oneArray, children]
         else:
             print('Invalid ImplementationType Type')
             exit(1)

@@ -9,7 +9,7 @@ MUTATION (Mutación):
     LIM-MULTIGEN
     UNIFORM-MULTIGEN
     COMPLETE
-PARENT-SELECTION:
+SELECTION:
     ELITE
     R-WHEEL (Ruleta)
     UNIV (Universal)

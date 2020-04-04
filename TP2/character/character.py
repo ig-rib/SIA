@@ -1,12 +1,17 @@
 #!/bin/python3
 
 import math
+import constants as ct
 
 class Character:
 
     def __init__(self, height = 0, equipment = None, attackCoeff = 0.0, defenseCoeff = 0.0):
-        self.h = height
-        self.equipment = equipment
+        # self.h = height
+        self.genes = {}
+        self.genes[ct.height] = height
+        for key in equipment.keys():
+            self.genes[key] = equipment[key]
+        # self.equipment = equipment
         self.attackCoeff = attackCoeff
         self.defenseCoeff = defenseCoeff
     
@@ -28,12 +33,12 @@ class Character:
         return 100*math.tanh(0.01 * self.__sumEquipmentPropertyValues('Vi'))
 
     def calculateATM(self):
-        return 0.7 - (3*self.h-5)**4 + (3*self.h-5)**2 + self.h/4
+        return 0.7 - (3*self.genes[ct.height]-5)**4 + (3*self.genes[ct.height]-5)**2 + self.genes[ct.height]/4
     def calculateDEM(self):
-        return 1.9 + (2.5*self.h - 4.16)**4 - (2.5*self.h-4.16)**2 - 3*self.h/10
+        return 1.9 + (2.5*self.genes[ct.height] - 4.16)**4 - (2.5*self.genes[ct.height]-4.16)**2 - 3*self.genes[ct.height]/10
 
     def calculateAttack(self):
-        return (self.calculateagility() + self.calculateExpertise()) * self.calculateStrength() * self.calculateATM()
+        return (self.calculateAgility() + self.calculateExpertise()) * self.calculateStrength() * self.calculateATM()
     def calculateDefense(self):
         return (self.calculateResistance() + self.calculateExpertise()) * self.calculateLife() * self.calculateDEM()
 
