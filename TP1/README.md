@@ -29,14 +29,16 @@ Primero abrimos el archivo `solver.config` e indicamos con `1` el algoritmo dese
 ```txt
 DFS 0
 BFS 0
-IDDFS 0
+IDDFS 1
 GG 0
-A* 1
+A* 0
 IDA* 0
 H 0
+IDDFS-Step 50
 PrintState 0
 CornerSense 1
 ```
+* En `IDDFS-Step` se debe indicar el incremento deseado para cada iteracion del algoritmo IDDFS
 * El flag `PrintState` activa la impresion de nodos explorados 
 * El flag `CornerSense` mejora la performance del algoritmo evitando que se exploren ramas no ganadoras. 
 
