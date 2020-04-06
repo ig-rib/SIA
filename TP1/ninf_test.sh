@@ -21,7 +21,7 @@ echo "------------------"
 echo "IDDFS START"
 printf "DFS 0\nBFS 0\nIDDFS 1\nGG 0\nA* 0\nIDA* 0\nH ${2}\nIDDFS-Step 50\nPrintState 0\nCornerSense 1\n" > solver.config
 date +"%T.%3N"
-python3 python/main.py maps/$1 > test/H$2-IDDFS-$1.txt
+python3 python/main.py maps/$1 > test/IDDFS-$1.txt
 date +"%T.%3N"
 echo "GG FINISH"
 echo "------------------"
