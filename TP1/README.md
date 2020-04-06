@@ -50,6 +50,8 @@ Ejecutamos de la siguiente manera
 
 ## Visual
 
+![Optimal Path](images/animated.gif)
+
 Para visualizar el resultado de una manera animatda ejectuamos
 
 Los archivos de test poseen el formato:
