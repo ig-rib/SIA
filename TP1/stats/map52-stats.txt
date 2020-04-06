@@ -1,0 +1,13 @@
+out_file;cost;depth;exp_nodes;frontier;time;
+test/BFS-map52.txt;65;45;7461;551;20,958746;
+test/DFS-map52.txt;153;89;1663;60;1,296319;
+test/H0-Astar-map52.txt;65;45;2502;426;2,066495;
+test/H0-gg-map52.txt;131;79;2343;63;2,29039;
+test/H0-IDAstar-map52.txt;
+test/H0-IDDFS-map52.txt;101;63;7238;50;20,241059;
+test/H1-Astar-map52.txt;65;45;1916;409;1,15407;
+test/H1-gg-map52.txt;65;45;254;69;0,028028;
+test/H1-IDAstar-map52.txt;
+test/H2-Astar-map52.txt;65;45;2502;426;2,010484;
+test/H2-gg-map52.txt;131;79;2343;63;2,258072;
+test/H2-IDAstar-map52.txt;
