@@ -11,4 +11,4 @@ if __name__ == '__main__':
     settings = ConfigFileReader('solver.config').getSettings()
     equipmentFiles = [charactersDir + '/' + fileName for fileName in os.listdir(charactersDir)]
     characters = GenerationZeroReader(equipmentFiles, charClass).generateCharacters()
-    solver = Solver()
+    solver = Solver(characters, settings)

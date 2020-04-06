@@ -10,7 +10,8 @@ mutation = {
     'gen':'GEN',
     'multiGen':'LIM-MULTIGEN',
     'uniformMultigen':'UNIFORM-MULTIGEN',
-    'complete':'COMPLETE'
+    'complete':'COMPLETE',
+    'pM': 'PM'
 }
 selection = {
     'name':'SELECTION',

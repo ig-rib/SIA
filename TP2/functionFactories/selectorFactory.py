@@ -5,7 +5,11 @@ import constants as ct
 class SelectorFactory:
 
     def __init__(self, type):
-        if type == 'R-WHEEL':
+        if type == 'ELITE':
+            def performSelection(parents, children):
+                
+                return None
+        elif type == 'R-WHEEL':
             def performSelection(parents, children):
                 return None
         elif type == 'UNIV':

@@ -45,6 +45,9 @@ class Character:
     def getPerformance(self):
         return self.attackCoeff * self.calculateAttack() + self.defenseCoeff * self.calculateDefense()
 
+    def __repr__(self):
+        return self.getPerformance()
+
 class Warrior(Character):
     def __init__(self, height, equipment):
         super().__init__(height, equipment, 0.6, 0.6)
