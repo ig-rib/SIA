@@ -51,9 +51,9 @@ class CrossingOverFactory:
                 locus = rd.randint(0, len(keys)-1)
                 # TODO checkear el // 2 + 1
                 length = rd.randint(0, len(keys) // 2 + 1)
-                shuffledParents = rd.shuffle(generation)
-                for i in range(0, len(shuffledParents), 2):
-                    p1, p2 = shuffledParents[i], shuffledParents[i+1]
+                rd.shuffle(generation)
+                for i in range(0, len(generation), 2):
+                    p1, p2 = generation[i], generation[i+1]
                     p1p = copy.deepcopy(p1)
                     p2p = copy.deepcopy(p2)
                     i = locus

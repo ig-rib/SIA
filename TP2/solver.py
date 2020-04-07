@@ -7,6 +7,7 @@ from functionFactories.stopCriteriaFactory import StopCriteriaFactory
 from functionFactories.implementationFactory import ImplementationFactory
 import constants as ct
 import datetime as dt
+import matplotlib.pyplot as plt
 
 class Solver:
     def __init__(self, genZero, configDict):
@@ -36,7 +37,7 @@ class Solver:
         equalGenerations = 0
         
         done = False
-
+        maxes = []
         while not done:
             
             children = crossOver(generation)
@@ -63,6 +64,7 @@ class Solver:
                     equalGenerations += 1
                 done = isDone(equalGenerations, stopLimit)
             
-            print(max([x.getPerformance() for x in newGeneration]))
+            maxes.append(max([x.getPerformance() for x in newGeneration]))
             iterationNo += 1
-
+        plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
+        plt.show()
