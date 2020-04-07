@@ -5,7 +5,7 @@
 Ejecución de todos los algoritmos sobre un mapa
 
 ```bash
-git clone https://bitbucket.org/itba/sia-2020-1c-02.git && cd TP1
+git clone https://bitbucket.org/itba/sia-2020-1c-02.git
 chmod +x ./all.sh
 ./all.sh [MAP_NAME]
 ```
@@ -14,7 +14,7 @@ Las respuestas apareceran en la carpeta `test`, y las estadisticas en formato cs
 Otra opción es realizar la configuración deseada en `solver.config` y ejecutar
 
 ```bash
-git clone https://bitbucket.org/itba/sia-2020-1c-02.git && cd TP1
+git clone https://bitbucket.org/itba/sia-2020-1c-02.git
 chmod +x ./run.sh
 ./run.sh [MAP_NAME]
 ```

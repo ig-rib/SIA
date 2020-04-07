@@ -183,6 +183,9 @@ class Solver:
                 state.printState(maze)
                 print("&&")
 
-            print("Total cost: %ld\nSolution Depth: %ld\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
+            print("SUCCESFULLY SOLVED\nTotal cost: %ld\nSolution Depth: %ld\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
             % (solutionNode.g, len(path), len(E), len(F)))
             print(totalTime.total_seconds())
+        else:
+            print("NO SOLUTION\nExpanded Nodes: %ld\nRemaining Frontier: %ld" 
+            % (len(E), len(F)))
