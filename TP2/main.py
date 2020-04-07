@@ -3,6 +3,7 @@
 from readers.configFileReader import ConfigFileReader
 from readers.generationZeroReader import GenerationZeroReader
 from solver import Solver
+from geneticSelectors.eliteSelector import EliteSelector
 import os
 
 if __name__ == '__main__':

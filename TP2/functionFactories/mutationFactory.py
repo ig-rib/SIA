@@ -54,7 +54,7 @@ class MutationFactory:
                             else:
                                 for subKey in child.genes[key]:
                                     child.genes[key][subKey] += getModifier()
-                return None
+                return children
         elif type == 'COMPLETE':
             def performMutation(children):
                 keys = list(children[0].genes.keys())
@@ -65,7 +65,7 @@ class MutationFactory:
                         else:
                             for subKey in child.genes[key]:
                                 child.genes[key][subKey] += getModifier()
-                return None
+                return children
         else:
             print('Invalid Mutation Type')
             exit(1)

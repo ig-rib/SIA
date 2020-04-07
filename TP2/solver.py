@@ -13,9 +13,11 @@ class Solver:
         
         stopLimit = configDict[ct.stopCriterion['name']][1]
         
+        N = len(genZero)
+        
         crossOver = CrossingOverFactory(configDict[ct.crossingOver['name']]).getCrossingOverFunction()
         mutate = MutationFactory(configDict[ct.mutation['name']], float(configDict[ct.mutation['pM']])).getMutationFunction()
-        select = SelectorFactory(configDict[ct.selection['name']]).getSelectionFunction()
+        selector = SelectorFactory(configDict[ct.selection['name']], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
         isDone = StopCriteriaFactory(configDict[ct.stopCriterion['name']][0]).getDoneFunction()
         implement = ImplementationFactory(configDict[ct.implementation['name']]).getImplementationFunction()
         
@@ -40,7 +42,7 @@ class Solver:
             children = crossOver(generation)
             newChildren = mutate(children)
             selectableIndividuals = implement(generation, newChildren)
-            newGeneration = select(selectableIndividuals)
+            newGeneration = selector.performSelection(selectableIndividuals)
             
             time = startTime - dt.datetime.now()
             
@@ -61,5 +63,6 @@ class Solver:
                     equalGenerations += 1
                 done = isDone(equalGenerations, stopLimit)
             
+            print(max([x.getPerformance() for x in newGeneration]))
             iterationNo += 1
 

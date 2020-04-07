@@ -38,5 +38,10 @@ implementation = {
 }
 
 height = 'HEIGHT'
+
 oneArray = 'ONEARR'
 childrenAndParents = 'CHAP'
+
+boltzmannTemperature = 'T'
+
+tournaments2Threshold = 'T2Thresh'

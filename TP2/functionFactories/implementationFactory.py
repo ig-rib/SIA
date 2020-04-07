@@ -7,6 +7,7 @@ class ImplementationFactory:
     def __init__(self, type):
         if type == 'FILL-PARENT':
             def implement(parents, children):
+                # Acá debería ser >= K, pero todavía no sé de dónde sacarlo
                 if len(children) >= len(parents):
                     return [ct.oneArray, children]
                 children.extend(parents)

@@ -17,8 +17,8 @@ class Character:
     
     def __sumEquipmentPropertyValues(self, propertyName):
         total = 0
-        for key in self.equipment.keys():
-            total += self.equipment[key][propertyName]
+        for key in filter(lambda x: x != ct.height, self.genes.keys()):
+            total += self.genes[key][propertyName]
         return total
 
     def calculateStrength(self):
@@ -47,6 +47,19 @@ class Character:
 
     def __repr__(self):
         return self.getPerformance()
+
+    def __ge__(self, other):
+        return self.getPerformance() >= other.getPerformance()
+    def __gt__(self, other):
+        return self.getPerformance() > other.getPerformance()
+    def __le__(self, other):
+        return self.getPerformance() <= other.getPerformance()
+    def __lt__(self, other):
+        return self.getPerformance() < other.getPerformance()
+    def __eq__(self, other):
+        return self.getPerformance() == other.getPerformance()
+    def __ne__(self, other):
+        return self.getPerformance() != other.getPerformance()
 
 class Warrior(Character):
     def __init__(self, height, equipment):

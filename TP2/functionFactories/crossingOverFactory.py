@@ -11,9 +11,10 @@ class CrossingOverFactory:
                 children = []
                 keys = list(generation[0].genes.keys())
                 locus = rd.randint(0, len(keys))
-                for i in range(len(generation)//2):
-                    # TODO checkear que no se repitan parejas...
-                    [ p1, p2 ] = rd.sample(generation, 2)
+                rd.shuffle(generation)
+                shuffledParents = generation
+                for i in range(0, len(shuffledParents), 2):
+                    p1, p2 = shuffledParents[i], shuffledParents[i+1]
                     p1p = copy.deepcopy(p1)
                     p2p = copy.deepcopy(p2)
                     for j in range(locus, len(keys)):
@@ -21,8 +22,8 @@ class CrossingOverFactory:
                         tmp = p1p.genes[gene]
                         p1p.genes[gene] = p2p.genes[gene]
                         p2p.genes[gene] = tmp
-                children.append(p1p)
-                children.append(p2p)
+                    children.append(p1p)
+                    children.append(p2p)
                 return children
         elif type == 'TWO-POINT':
             def performCrossingOver(generation):
@@ -30,8 +31,9 @@ class CrossingOverFactory:
                 keys = list(generation[0].genes.keys())
                 locus1 = rd.randint(0, len(keys)-1)
                 locus2 = rd.randint(locus1, len(keys))
-                for i in range(len(generation)//2):
-                    [ p1, p2 ] = rd.sample(generation, 2)
+                shuffledParents = rd.shuffle(generation)
+                for i in range(0, len(shuffledParents), 2):
+                    p1, p2 = shuffledParents[i], shuffledParents[i+1]
                     p1p = copy.deepcopy(p1)
                     p2p = copy.deepcopy(p2)
                     for j in range(locus1, locus2):
@@ -39,15 +41,49 @@ class CrossingOverFactory:
                         tmp = p1p.genes[gene]
                         p1p.genes[gene] = p2p.genes[gene]
                         p2p.genes[gene] = tmp
-                children.append(p1p)
-                children.append(p2p)
+                    children.append(p1p)
+                    children.append(p2p)
                 return children
         elif type == 'ANNULAR':
             def performCrossingOver(generation):
-                return None
+                children = []
+                keys = list(generation[0].genes.keys())
+                locus = rd.randint(0, len(keys)-1)
+                # TODO checkear el // 2 + 1
+                length = rd.randint(0, len(keys) // 2 + 1)
+                shuffledParents = rd.shuffle(generation)
+                for i in range(0, len(shuffledParents), 2):
+                    p1, p2 = shuffledParents[i], shuffledParents[i+1]
+                    p1p = copy.deepcopy(p1)
+                    p2p = copy.deepcopy(p2)
+                    i = locus
+                    for j in range(length):
+                        gene = keys[i]
+                        tmp = p1p.genes[gene]
+                        p1p.genes[gene] = p2p.genes[gene]
+                        p2p.genes[gene] = tmp
+                        i = (i + 1) % len(keys)
+                    children.append(p1p)
+                    children.append(p2p)
+                return children
         elif type == 'UNIFORM':
             def performCrossingOver(generation):
-                return None
+                children = []
+                keys = list(generation[0].genes.keys())
+                shuffledParents = rd.shuffle(generation)
+                for i in range(0, len(shuffledParents), 2):
+                    p1, p2 = shuffledParents[i], shuffledParents[i+1]
+                    p1p = copy.deepcopy(p1)
+                    p2p = copy.deepcopy(p2)
+                    for j in range(len(keys)):
+                        if rd.random() >= 0.5:
+                            gene = keys[j]
+                            tmp = p1p.genes[gene]
+                            p1p.genes[gene] = p2p.genes[gene]
+                            p2p.genes[gene] = tmp
+                    children.append(p1p)
+                    children.append(p2p)
+                return children
         else:
             print('Invalid Crossing Over Type')
             exit(1)
