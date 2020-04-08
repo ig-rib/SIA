@@ -31,7 +31,8 @@ class CrossingOverFactory:
                 keys = list(generation[0].genes.keys())
                 locus1 = rd.randint(0, len(keys)-1)
                 locus2 = rd.randint(locus1, len(keys))
-                shuffledParents = rd.shuffle(generation)
+                rd.shuffle(generation)
+                shuffledParents = generation
                 for i in range(0, len(shuffledParents), 2):
                     p1, p2 = shuffledParents[i], shuffledParents[i+1]
                     p1p = copy.deepcopy(p1)
@@ -70,7 +71,8 @@ class CrossingOverFactory:
             def performCrossingOver(generation):
                 children = []
                 keys = list(generation[0].genes.keys())
-                shuffledParents = rd.shuffle(generation)
+                rd.shuffle(generation)
+                shuffledParents = generation
                 for i in range(0, len(shuffledParents), 2):
                     p1, p2 = shuffledParents[i], shuffledParents[i+1]
                     p1p = copy.deepcopy(p1)
