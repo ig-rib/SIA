@@ -9,6 +9,7 @@ from domains import getDomains
 import constants as ct
 import datetime as dt
 import matplotlib.pyplot as plt
+import random as rd
 
 class Solver:
     def __init__(self, genZero, configDict):
@@ -21,7 +22,10 @@ class Solver:
         
         crossOver = CrossingOverFactory(configDict[ct.crossingOver['name']]).getCrossingOverFunction()
         mutator = MutationFactory(configDict[ct.mutation['name']], float(configDict[ct.mutation['pM']]), domains)
-        selector = SelectorFactory(configDict[ct.selection['name']], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
+        selector1 = SelectorFactory(configDict[ct.selection['name']][0], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
+        selector2 = SelectorFactory(configDict[ct.selection['name']][1], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
+        selector3 = SelectorFactory(configDict[ct.selection['name']][2], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
+        selector4 = SelectorFactory(configDict[ct.selection['name']][3], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
         isDone = StopCriteriaFactory(configDict[ct.stopCriterion['name']][0]).getDoneFunction()
         implement = ImplementationFactory(configDict[ct.implementation['name']]).getImplementationFunction()
 
@@ -42,8 +46,18 @@ class Solver:
             
             children = crossOver(generation)
             newChildren = mutator.performMutation(children)
-            # newChildren = children
+            rdA = rd.random()
+            if rdA < float(configDict[ct.a]):
+                selector = selector1
+            else:
+                selector = selector2
+            parents = selector.select(generation, len(generation)//2)
             selectableIndividuals = implement(generation, newChildren)
+            rdB = rd.random()
+            if rdB < float(configDict[ct.b]):
+                selector = selector3
+            else:
+                selector = selector4
             newGeneration = selector.performSelection(selectableIndividuals)
             
             time = startTime - dt.datetime.now()

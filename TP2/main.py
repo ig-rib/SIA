@@ -7,7 +7,7 @@ from geneticSelectors.eliteSelector import EliteSelector
 import os
 
 if __name__ == '__main__':
-    charClass = 'WARRIOR'
+    charClass = 'ARCHER'
     charactersDir = 'characters'
     settings = ConfigFileReader('solver.config').getSettings()
     equipmentFiles = [charactersDir + '/' + fileName for fileName in os.listdir(charactersDir)]

@@ -12,8 +12,11 @@ class ConfigFileReader:
             keyValuePair = deque(line.rstrip().split())
             key = keyValuePair.popleft()
             self.settings[key] = keyValuePair.popleft()
-            if len(keyValuePair) > 0:
+            if len(keyValuePair) == 1:
                 self.settings[key] = [self.settings[key], float(keyValuePair.popleft())]
+            elif len(keyValuePair) > 1:
+                self.settings[key] = [self.settings[key]]
+                self.settings[key].extend(keyValuePair)
             line = settingsFile.readline()
 
     def getSettings(self):
