@@ -5,6 +5,7 @@ from functionFactories.mutationFactory import MutationFactory
 from functionFactories.selectorFactory import SelectorFactory
 from functionFactories.stopCriteriaFactory import StopCriteriaFactory
 from functionFactories.implementationFactory import ImplementationFactory
+from domains import getDomains
 import constants as ct
 import datetime as dt
 import matplotlib.pyplot as plt
@@ -12,21 +13,20 @@ import matplotlib.pyplot as plt
 class Solver:
     def __init__(self, genZero, configDict):
         
+        domains = getDomains(genZero)
+
         stopLimit = configDict[ct.stopCriterion['name']][1]
         
         N = len(genZero)
         
         crossOver = CrossingOverFactory(configDict[ct.crossingOver['name']]).getCrossingOverFunction()
-        mutate = MutationFactory(configDict[ct.mutation['name']], float(configDict[ct.mutation['pM']])).getMutationFunction()
+        mutator = MutationFactory(configDict[ct.mutation['name']], float(configDict[ct.mutation['pM']]), domains)
         selector = SelectorFactory(configDict[ct.selection['name']], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
         isDone = StopCriteriaFactory(configDict[ct.stopCriterion['name']][0]).getDoneFunction()
         implement = ImplementationFactory(configDict[ct.implementation['name']]).getImplementationFunction()
-        
 
         generation = genZero
         
-        mutate(generation)
-
         iterationNo = 0
         
         startTime = dt.datetime.now()
@@ -41,7 +41,8 @@ class Solver:
         while not done:
             
             children = crossOver(generation)
-            newChildren = mutate(children)
+            newChildren = mutator.performMutation(children)
+            # newChildren = children
             selectableIndividuals = implement(generation, newChildren)
             newGeneration = selector.performSelection(selectableIndividuals)
             
@@ -66,5 +67,6 @@ class Solver:
             
             maxes.append(max([x.getPerformance() for x in newGeneration]))
             iterationNo += 1
+            generation = newGeneration
         plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
         plt.show()

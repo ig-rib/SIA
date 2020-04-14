@@ -9,7 +9,7 @@ class RankingSelector(Selector):
     
     def select(self, group, K):
         ranking = sorted(group)
-        fPrimes = [ (len(ranking) - i) / len(ranking) for i, elem in ranking ]
+        fPrimes = [ (len(ranking) - (i+1)) / len(ranking) for i, elem in enumerate(ranking) ]
         totalPerformanceSum = sum(fPrimes)
         fPrimes[:] = [ x / totalPerformanceSum for x in fPrimes]
         cumulativePs = [fPrimes[0]]

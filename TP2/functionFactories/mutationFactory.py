@@ -3,44 +3,41 @@
 import random as rd
 import constants as ct
 
-def getNewHeight():
-    return rd.random()*0.7 + 1.3
-
-def getModifier():
-    sign = rd.choice([-1, 1])
-    return sign * rd.random()
 
 class MutationFactory:
 
-    def __init__(self, type, pm):
-        
+    # def getNewHeight(self):
+    #     return rd.random()*0.7 + 1.3
+
+    # def getModifier(self):
+    #     sign = rd.choice([-1, 1])
+    #     return sign * rd.random()
+
+    def getNewGeneValue(self, geneName):
+        geneDomain = self.domains[geneName]
+        return rd.sample(geneDomain, 1)[0]
+
+    def __init__(self, type, pm, domains):
+        self.domains = domains
+
         if type == 'GEN':
             def performMutation(children):
                 doPerformMutation = rd.random()
                 if doPerformMutation <= pm:
                     keys = list(children[0].genes.keys())
-                    selectedKey = keys[rd.randint(0, len(keys))]
-                    if selectedKey == ct.height:
-                        for child in children:
-                            child.genes[ct.height] = getNewHeight()
-                    else:
-                        for child in children:
-                            for key in child.genes[selectedKey]:
-                                child.genes[selectedKey][key] += getModifier()
+                    selectedKey = keys[rd.randint(0, len(keys)-1)]
+                    for child in children:
+                        child.genes[selectedKey] = self.getNewGeneValue(selectedKey)
                 return children
         elif type == 'LIM-MULTIGEN':
             def performMutation(children):
                 keys = list(children[0].genes.keys())
-                selectedKeys = rd.sample(keys, rd.randint(0, len(keys)))
+                selectedKeys = rd.sample(keys, rd.randint(0, len(keys)-1))
                 for child in children:
                     for selectedKey in selectedKeys:
                         doPerformMutation = rd.random()
                         if doPerformMutation <= pm:
-                            if selectedKey == ct.height:
-                                child.genes[selectedKey] = getNewHeight()
-                            else:
-                                for key in child.genes[selectedKey]:
-                                    child.genes[selectedKey][key] += getModifier()
+                            child.genes[selectedKey] = self.getNewGeneValue(selectedKey)
                 return children
         elif type == 'UNIFORM-MULTIGEN':
             def performMutation(children):
@@ -49,22 +46,16 @@ class MutationFactory:
                     for key in keys:
                         doPerformMutation = rd.random()
                         if doPerformMutation <= pm:
-                            if key == ct.height:
-                                child.genes[key] = getNewHeight()
-                            else:
-                                for subKey in child.genes[key]:
-                                    child.genes[key][subKey] += getModifier()
+                            child.genes[key] = self.getNewGeneValue(key)
                 return children
         elif type == 'COMPLETE':
             def performMutation(children):
-                keys = list(children[0].genes.keys())
                 for child in children:
-                    for key in keys:
-                        if key == ct.height:
-                                child.genes[key] = getNewHeight()
-                        else:
-                            for subKey in child.genes[key]:
-                                child.genes[key][subKey] += getModifier()
+                    doPerformMutation = rd.random()
+                    if doPerformMutation <= pm:
+                        keys = list(children[0].genes.keys())
+                        for key in keys:
+                            child.genes[key] = self.getNewGeneValue(key)
                 return children
         else:
             print('Invalid Mutation Type')

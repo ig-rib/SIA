@@ -15,10 +15,10 @@ class StopCriteriaFactory:
                 return None
         elif type == 'STRUCT':
             def done(criterionValue, criticalValue):
-                return criterionValue >= criticalValue
+                return None
         elif type == 'CONTENT':
             def done(criterionValue, criticalValue):
-                return None
+                return criterionValue >= criticalValue
         else:
             print('Invalid Stop Criterion')
             exit(1)
