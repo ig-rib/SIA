@@ -29,7 +29,7 @@ class Solver:
         isDone = StopCriteriaFactory(configDict[ct.stopCriterion['name']][0]).getDoneFunction()
         implement = ImplementationFactory(configDict[ct.implementation['name']]).getImplementationFunction()
 
-        generation = genZero
+        generation = rd.sample(genZero, 10)
         
         iterationNo = 0
         
@@ -69,9 +69,7 @@ class Solver:
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['acceptable']:
                 done = isDone(newGeneration, stopLimit)
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['struct']:
-                #DeepCompare each element from generation with each from newGeneration to determine equality percentage
-                #if 
-                done = isDone(time, stopLimit)
+                done, equalGenerations = isDone(generation, newGeneration, equalGenerations, configDict[ct.stopCriterion['name']][2], stopLimit)
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['content']:
                 prevBestFitness = bestFitness
                 bestFitness = max([x.getFitness() for x in generation])

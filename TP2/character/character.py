@@ -45,6 +45,17 @@ class Character:
     def getPerformance(self):
         return self.attackCoeff * self.calculateAttack() + self.defenseCoeff * self.calculateDefense()
 
+    def equals(self, other : Character):
+        for gene in self.genes.keys():
+            if gene == ct.height:
+                if self.genes[gene] != other.genes[gene]:
+                    return False
+            else:
+                for key in self.genes[gene].keys():
+                    if self.genes[gene][key] != other.genes[gene][key]:
+                        return False
+        return True
+
     def __repr__(self):
         return self.getPerformance()
 
