@@ -40,6 +40,9 @@ class Solver:
         bestFitness = 0
         equalGenerations = 0
         
+        bestMax = 0
+        bestIndividual = None
+
         done = False
         maxes = []
         while not done:
@@ -77,8 +80,18 @@ class Solver:
                     equalGenerations += 1
                 done = isDone(equalGenerations, stopLimit)
             
-            maxes.append(max([x.getPerformance() for x in newGeneration]))
+            generationMax = max([(x.getPerformance(), x) for x in newGeneration])
+
+            if bestMax < generationMax[0]:
+                bestMax = generationMax[0]
+                bestIndividual = generationMax[1]
+
+            maxes.append(generationMax[0])
+            
+
             iterationNo += 1
             generation = newGeneration
         plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
         plt.show()
+        print(bestMax)
+        print(bestIndividual.genes)
