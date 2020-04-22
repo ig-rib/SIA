@@ -16,7 +16,7 @@ class Solver:
         
         domains = getDomains(genZero)
 
-        stopLimit = configDict[ct.stopCriterion['name']][1]
+        stopLimit = float(configDict[ct.stopCriterion['name']][1])
         
         N = len(genZero)
         
@@ -69,7 +69,7 @@ class Solver:
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['acceptable']:
                 done = isDone(newGeneration, stopLimit)
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['struct']:
-                done, equalGenerations = isDone(generation, newGeneration, equalGenerations, configDict[ct.stopCriterion['name']][2], stopLimit)
+                done, equalGenerations = isDone(generation, newGeneration, equalGenerations, float(configDict[ct.stopCriterion['name']][2]), stopLimit)
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['content']:
                 prevBestFitness = bestFitness
                 bestFitness = max([x.getFitness() for x in generation])
