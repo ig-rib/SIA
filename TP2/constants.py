@@ -52,3 +52,5 @@ boltzmannTemperature = 'T'
 tournaments2Threshold = 'T2Thresh'
 a = 'a'
 b = 'b'
+
+parentQty = 'PQTY'

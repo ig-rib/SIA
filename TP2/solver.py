@@ -29,7 +29,7 @@ class Solver:
         isDone = StopCriteriaFactory(configDict[ct.stopCriterion['name']][0]).getDoneFunction()
         implement = ImplementationFactory(configDict[ct.implementation['name']]).getImplementationFunction()
 
-        generation = rd.sample(genZero, configDict['PQTY'])
+        generation = rd.sample(genZero, configDict[ct.parentQty])
         
         iterationNo = 0
         
