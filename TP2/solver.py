@@ -7,7 +7,7 @@ from functionFactories.stopCriteriaFactory import StopCriteriaFactory
 from functionFactories.implementationFactory import ImplementationFactory
 import constants as ct
 import datetime as dt
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import random as rd
 import generationZeroGenerator as gzg
 
@@ -91,6 +91,9 @@ class Solver:
 
             iterationNo += 1
             generation = newGeneration
-        plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
-        plt.show()
+        #plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
+        #plt.show()
+        print(maxes)
+        print("************")
+        print("Best MAX")
         print(bestMax)
