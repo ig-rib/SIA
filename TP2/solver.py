@@ -94,4 +94,3 @@ class Solver:
         plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
         plt.show()
         print(bestMax)
-        print(bestIndividual.genes)
