@@ -29,5 +29,5 @@ class GenerationZeroGenerator:
                 characters.append(Defender(height, equipment))
             elif self.characterClass == 'SPY':
                 characters.append(Spy(height, equipment))
-        print('generated genZero')
+        #print('generated genZero')
         return characters

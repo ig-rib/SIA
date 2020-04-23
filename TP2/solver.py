@@ -45,7 +45,7 @@ class Solver:
 
         done = False
         maxes = []
-        allIndividual = []
+        allindi = []
         while not done:
             
             children = crossOver(generation)
@@ -88,16 +88,10 @@ class Solver:
                 bestIndividual = generationMax[1]
 
             maxes.append(generationMax[0])
-            allIndividual.append(generationMax[1])            
-
+            allindi.append(generationMax[1])
             iterationNo += 1
             generation = newGeneration
         #plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
         #plt.show()
-
-        print(maxes)
-        print("************")
-        print("Best MAX")
-        print("************")
-        print("allIndividual")
-        print(allIndividual)
+        for x in allindi:
+            print("%s;%s" % (x.genes, x.__str__()))
