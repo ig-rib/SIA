@@ -12,6 +12,6 @@ if __name__ == '__main__':
     settings = ConfigFileReader('solver.config').getSettings()
     equipmentFiles = [charactersDir + '/' + fileName for fileName in os.listdir(charactersDir)]
     # characters = GenerationZeroReader(equipmentFiles, charClass).generateCharacters()
-    domains = readDomains('/media/click/TOSHIBA EXT/Documents/SIA/TP2/trueData/')
+    domains = readDomains('characters/')
     # domains = readDomains(charactersDir)
     solver = Solver(domains, charClass, settings)
