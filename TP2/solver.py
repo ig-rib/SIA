@@ -96,4 +96,7 @@ class Solver:
         print(maxes)
         print("************")
         print("Best MAX")
+        print("************")
+        print("Genes")
+        print(generationMax[0].genes)
         print(bestMax)
