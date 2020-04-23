@@ -5,12 +5,16 @@ import constants as ct
 
 class Character:
 
-    def __init__(self, height = 0, equipment = None, attackCoeff = 0.0, defenseCoeff = 0.0):
+    def __init__(self, height = 0, equipment = None, attackCoeff = 0.0, defenseCoeff = 0.0, genes = None):
         # self.h = height
         self.genes = {}
-        self.genes[ct.height] = height
-        for key in equipment.keys():
-            self.genes[key] = equipment[key]
+        if genes == None:
+            self.genes[ct.height] = height
+            for key in equipment.keys():
+                self.genes[key] = equipment[key]
+        else:
+            for key in genes.keys():
+                self.genes[key] = genes[key]
         # self.equipment = equipment
         self.attackCoeff = attackCoeff
         self.defenseCoeff = defenseCoeff
@@ -73,17 +77,27 @@ class Character:
         return self.getPerformance() != other.getPerformance()
 
 class Warrior(Character):
-    def __init__(self, height, equipment):
-        super().__init__(height, equipment, 0.6, 0.6)
+    def __init__(self, height=0, equipment=None, genes=None):
+        super().__init__(height, equipment, 0.6, 0.6, genes=genes)
 
 class Archer(Character):
-    def __init__(self, height=0, equipment=None):
-        super().__init__(height, equipment, 0.9, 0.1)
+    def __init__(self, height=0, equipment=None, genes=None):
+        super().__init__(height, equipment, 0.9, 0.1, genes=genes)
 
 class Defender(Character):
-    def __init__(self, height=0, equipment=None):
-        super().__init__(height, equipment, 0.3, 0.8)
+    def __init__(self, height=0, equipment=None, genes=None):
+        super().__init__(height, equipment, 0.3, 0.8, genes=genes)
         
 class Spy(Character):
-    def __init__(self, height=0, equipment=None):
-        super().__init__(height, equipment, 0.8, 0.3)
+    def __init__(self, height=0, equipment=None, genes=None):
+        super().__init__(height, equipment, 0.8, 0.3, genes=genes)
+
+def cloneCharacter(character):
+    if type(character) == Archer:
+        return Archer(genes=character.genes)
+    if type(character) == Defender:
+        return Defender(genes=character.genes)
+    if type(character) == Spy:
+        return Spy(genes=character.genes)
+    if type(character) == Warrior:
+        return Warrior(genes=character.genes)

@@ -14,6 +14,8 @@ class MutationFactory:
     #     return sign * rd.random()
 
     def getNewGeneValue(self, geneName):
+        if geneName == ct.height:
+            return rd.random()* 0.7 + 1.3
         geneDomain = self.domains[geneName]
         return rd.sample(geneDomain, 1)[0]
 

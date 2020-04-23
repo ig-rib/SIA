@@ -5,16 +5,16 @@ from functionFactories.mutationFactory import MutationFactory
 from functionFactories.selectorFactory import SelectorFactory
 from functionFactories.stopCriteriaFactory import StopCriteriaFactory
 from functionFactories.implementationFactory import ImplementationFactory
-from domains import getDomains
 import constants as ct
 import datetime as dt
 import matplotlib.pyplot as plt
 import random as rd
+import generationZeroGenerator as gzg
 
 class Solver:
-    def __init__(self, genZero, configDict):
+    def __init__(self, domains, characterClass, configDict):
         
-        domains = getDomains(genZero)
+        genZero = gzg.GenerationZeroGenerator(characterClass).generateCharacters(10, domains)
 
         stopLimit = float(configDict[ct.stopCriterion['name']][1])
         

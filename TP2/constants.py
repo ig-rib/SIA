@@ -37,6 +37,11 @@ implementation = {
     'fillParent':'FILL-PARENT'
 }
 
+archer = 'Archer'
+defender = 'Defender'
+spy = 'Spy'
+warrior = 'Warrior'
+
 height = 'HEIGHT'
 
 oneArray = 'ONEARR'

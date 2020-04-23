@@ -1,15 +1,17 @@
 #!/bin/python3
 
 from readers.configFileReader import ConfigFileReader
-from readers.generationZeroReader import GenerationZeroReader
 from solver import Solver
 from geneticSelectors.eliteSelector import EliteSelector
 import os
+from domains import readDomains
 
 if __name__ == '__main__':
     charClass = 'ARCHER'
-    charactersDir = 'characters'
+    charactersDir = 'characters/'
     settings = ConfigFileReader('solver.config').getSettings()
     equipmentFiles = [charactersDir + '/' + fileName for fileName in os.listdir(charactersDir)]
-    characters = GenerationZeroReader(equipmentFiles, charClass).generateCharacters()
-    solver = Solver(characters, settings)
+    # characters = GenerationZeroReader(equipmentFiles, charClass).generateCharacters()
+    domains = readDomains('/media/click/TOSHIBA EXT/Documents/SIA/TP2/trueData/')
+    # domains = readDomains(charactersDir)
+    solver = Solver(domains, charClass, settings)
