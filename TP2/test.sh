@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Start Test"
-for i in 1 2 3 4
+for i in {$1..$2}
 do
 #Runtime
 printf "Start Test ${i}\n"
