@@ -2,7 +2,6 @@
 i=$1
 echo "Start Test"
 while [ "$i" -le "$2" ]; do
-do
 #Runtime
 printf "Start Test ${i}\n"
 cat config/solver.config.${i} > solver.config
