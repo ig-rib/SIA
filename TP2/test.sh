@@ -5,7 +5,7 @@ while [ "$i" -le "$2" ]; do
 do
 #Runtime
 printf "Start Test ${i}\n"
-cat solver.config.${i} > solver.config
+cat config/solver.config.${i} > solver.config
 python3 main.py > test${i}.txt
 printf "Test ${i} Finished\n"
 
@@ -15,3 +15,5 @@ printf "set title \'${sub}\'\nset grid\nset ylabel \'Fitness\'\nset xlabel \'Gen
 
 i=$(($i + 1))
 done
+head -12 config/solver.config.* > all.config.test
+rm config/solver.config.*
