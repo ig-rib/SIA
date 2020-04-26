@@ -94,5 +94,5 @@ class Solver:
         #plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
         #plt.show()
         for x in allindi:
-            #print("%s;%s" % (x.genes, x.__str__()))
-            print("%s;" % (x.__str__()))
+            print("%s;%s" % (x.genes, x.__str__()))
+            #print("%s;" % (x.__str__()))
