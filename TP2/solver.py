@@ -54,7 +54,9 @@ class Solver:
             else:
                 selector = selector2
             parents = selector.select(generation, len(generation)//2)
+            
             children = crossOver(parents)
+            
             newChildren = mutator.performMutation(children)
             selectableIndividuals = implement(generation, newChildren)
             rdB = rd.random()
