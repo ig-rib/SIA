@@ -1,12 +1,13 @@
 #!/bin/bash
-i=$1
 echo "Start Test"
-while [ "$i" -le "$2" ]; do
+list=`ls config -l | sed 's/.*[\.:]//' | sed 1d | sed ':a;N;$!ba;s/\n/ /g'`
+for i in $list  
+do
 #Runtime
 printf "Start Test ${i}\n"
 cat config/solver.config.${i} > solver.config
 python3 main.py > test${i}.txt
-cat test${i}.txt | sed 's/\([^;]*\);\(.*\)/\2/' > test${i}-fit.txt
+cat test${i}.txt | sed 's/\([^;]\);\(.\)/\2/' > test${i}-fit.txt
 printf "Test ${i} Finished\n"
 
 #Plot Generator
@@ -16,5 +17,3 @@ printf "set title \'${sub}\'\nset grid\nset ylabel \'Fitness\'\nset xlabel \'Gen
 
 i=$(($i + 1))
 done
-head -12 config/solver.config.* > all.config.test
-rm config/solver.config.*
