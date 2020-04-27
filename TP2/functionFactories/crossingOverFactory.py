@@ -16,8 +16,8 @@ class CrossingOverFactory:
                 shuffledParents = generation
                 for i in range(0, len(shuffledParents), 2):
                     p1, p2 = shuffledParents[i], shuffledParents[i+1]
-                    p1p = copy.copy(p1)
-                    p2p = copy.copy(p2)
+                    p1p = cloneCharacter(p1)
+                    p2p = cloneCharacter(p2)
                     for j in range(locus, len(keys)):
                         gene = keys[j]
                         tmp = p1p.genes[gene]
@@ -56,8 +56,8 @@ class CrossingOverFactory:
                 rd.shuffle(generation)
                 for i in range(0, len(generation), 2):
                     p1, p2 = generation[i], generation[i+1]
-                    p1p = copy.copy(p1)
-                    p2p = copy.copy(p2)
+                    p1p = cloneCharacter(p1)
+                    p2p = cloneCharacter(p2)
                     lc = locus
                     for j in range(length):
                         gene = keys[lc]
@@ -76,8 +76,8 @@ class CrossingOverFactory:
                 shuffledParents = generation
                 for i in range(0, len(shuffledParents), 2):
                     p1, p2 = shuffledParents[i], shuffledParents[i+1]
-                    p1p = copy.copy(p1)
-                    p2p = copy.copy(p2)
+                    p1p = cloneCharacter(p1)
+                    p2p = cloneCharacter(p2)
                     for j in range(len(keys)):
                         if rd.random() >= 0.5:
                             gene = keys[j]
