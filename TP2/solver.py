@@ -48,14 +48,14 @@ class Solver:
         allindi = []
         while not done:
             
-            children = crossOver(generation)
-            newChildren = mutator.performMutation(children)
             rdA = rd.random()
             if rdA < float(configDict[ct.a]):
                 selector = selector1
             else:
                 selector = selector2
             parents = selector.select(generation, len(generation)//2)
+            children = crossOver(parents)
+            newChildren = mutator.performMutation(children)
             selectableIndividuals = implement(generation, newChildren)
             rdB = rd.random()
             if rdB < float(configDict[ct.b]):
