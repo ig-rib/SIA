@@ -7,11 +7,10 @@ import os
 from domains import readDomains
 
 if __name__ == '__main__':
-    charClass = 'ARCHER'
     charactersDir = 'characters/'
     settings = ConfigFileReader('solver.config').getSettings()
     equipmentFiles = [charactersDir + '/' + fileName for fileName in os.listdir(charactersDir)]
     # characters = GenerationZeroReader(equipmentFiles, charClass).generateCharacters()
     domains = readDomains('characters/')
     # domains = readDomains(charactersDir)
-    solver = Solver(domains, charClass, settings)
+    solver = Solver(domains, settings['CLASS'], settings)
