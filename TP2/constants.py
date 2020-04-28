@@ -37,6 +37,11 @@ implementation = {
     'fillParent':'FILL-PARENT'
 }
 
+archer = 'Archer'
+defender = 'Defender'
+spy = 'Spy'
+warrior = 'Warrior'
+
 height = 'HEIGHT'
 
 oneArray = 'ONEARR'
@@ -45,3 +50,7 @@ childrenAndParents = 'CHAP'
 boltzmannTemperature = 'T'
 
 tournaments2Threshold = 'T2Thresh'
+a = 'a'
+b = 'b'
+
+parentQty = 'PQTY'

@@ -7,25 +7,30 @@ from functionFactories.stopCriteriaFactory import StopCriteriaFactory
 from functionFactories.implementationFactory import ImplementationFactory
 import constants as ct
 import datetime as dt
+#import matplotlib.pyplot as plt
+import random as rd
+import generationZeroGenerator as gzg
 
 class Solver:
-    def __init__(self, genZero, configDict):
+    def __init__(self, domains, characterClass, configDict):
         
-        stopLimit = configDict[ct.stopCriterion['name']][1]
+        genZero = gzg.GenerationZeroGenerator(characterClass).generateCharacters(10, domains)
+
+        stopLimit = float(configDict[ct.stopCriterion['name']][1])
         
         N = len(genZero)
         
         crossOver = CrossingOverFactory(configDict[ct.crossingOver['name']]).getCrossingOverFunction()
-        mutate = MutationFactory(configDict[ct.mutation['name']], float(configDict[ct.mutation['pM']])).getMutationFunction()
-        selector = SelectorFactory(configDict[ct.selection['name']], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
+        mutator = MutationFactory(configDict[ct.mutation['name']], float(configDict[ct.mutation['pM']]), domains)
+        selector1 = SelectorFactory(configDict[ct.selection['name']][0], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
+        selector2 = SelectorFactory(configDict[ct.selection['name']][1], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
+        selector3 = SelectorFactory(configDict[ct.selection['name']][2], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
+        selector4 = SelectorFactory(configDict[ct.selection['name']][3], N, configDict[ct.boltzmannTemperature], configDict[ct.tournaments2Threshold]).getSelector()
         isDone = StopCriteriaFactory(configDict[ct.stopCriterion['name']][0]).getDoneFunction()
         implement = ImplementationFactory(configDict[ct.implementation['name']]).getImplementationFunction()
-        
 
-        generation = genZero
+        generation = rd.sample(genZero, int(configDict[ct.parentQty]))
         
-        mutate(generation)
-
         iterationNo = 0
         
         startTime = dt.datetime.now()
@@ -35,13 +40,30 @@ class Solver:
         bestFitness = 0
         equalGenerations = 0
         
-        done = False
+        bestMax = 0
+        bestIndividual = None
 
+        done = False
+        maxes = []
+        allindi = []
         while not done:
             
-            children = crossOver(generation)
-            newChildren = mutate(children)
+            rdA = rd.random()
+            if rdA < float(configDict[ct.a]):
+                selector = selector1
+            else:
+                selector = selector2
+            parents = selector.select(generation, len(generation)//2)
+            
+            children = crossOver(parents)
+            
+            newChildren = mutator.performMutation(children)
             selectableIndividuals = implement(generation, newChildren)
+            rdB = rd.random()
+            if rdB < float(configDict[ct.b]):
+                selector = selector3
+            else:
+                selector = selector4
             newGeneration = selector.performSelection(selectableIndividuals)
             
             time = startTime - dt.datetime.now()
@@ -53,9 +75,7 @@ class Solver:
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['acceptable']:
                 done = isDone(newGeneration, stopLimit)
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['struct']:
-                #DeepCompare each element from generation with each from newGeneration to determine equality percentage
-                #if 
-                done = isDone(time, stopLimit)
+                done, equalGenerations = isDone(generation, newGeneration, equalGenerations, float(configDict[ct.stopCriterion['name']][2]), stopLimit)
             elif configDict[ct.stopCriterion['name']][0] == ct.stopCriterion['content']:
                 prevBestFitness = bestFitness
                 bestFitness = max([x.getFitness() for x in generation])
@@ -63,6 +83,18 @@ class Solver:
                     equalGenerations += 1
                 done = isDone(equalGenerations, stopLimit)
             
-            print(max([x.getPerformance() for x in newGeneration]))
-            iterationNo += 1
+            generationMax = max([(x.getPerformance(), x) for x in newGeneration])
 
+            if bestMax < generationMax[0]:
+                bestMax = generationMax[0]
+                bestIndividual = generationMax[1]
+
+            maxes.append(generationMax[0])
+            allindi.append(generationMax[1])
+            iterationNo += 1
+            generation = newGeneration
+        #plt.plot(list(range(1, len(maxes)+1)), maxes, linestyle='', marker='o')
+        #plt.show()
+        for x in allindi:
+            print("%s;%s" % (x.genes, x.__str__()))
+            #print("%s;" % (x.__str__()))

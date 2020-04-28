@@ -1,15 +1,21 @@
 #!/bin/python3
 
 from readers.configFileReader import ConfigFileReader
-from readers.generationZeroReader import GenerationZeroReader
 from solver import Solver
 from geneticSelectors.eliteSelector import EliteSelector
 import os
+from domains import readDomains
+import sys
 
 if __name__ == '__main__':
-    charClass = 'WARRIOR'
-    charactersDir = 'characters'
     settings = ConfigFileReader('solver.config').getSettings()
-    equipmentFiles = [charactersDir + '/' + fileName for fileName in os.listdir(charactersDir)]
-    characters = GenerationZeroReader(equipmentFiles, charClass).generateCharacters()
-    solver = Solver(characters, settings)
+    if len(sys.argv) == 3:
+        testChar = sys.argv[1]
+        charactersDir = sys.argv[2] + '/'
+    else:
+        testChar = settings['CLASS']
+        charactersDir = 'characters.test/'
+    # characters = GenerationZeroReader(equipmentFiles, charClass).generateCharacters()
+    domains = readDomains(charactersDir)
+    # domains = readDomains(charactersDir)
+    solver = Solver(domains, testChar, settings)
