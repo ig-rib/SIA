@@ -12,7 +12,7 @@ class StopCriteriaFactory:
                 return criterionValue >= criticalValue
         elif type == 'ACCEPTABLE':
             def done(criterionValue, criticalValue):
-                return None
+                return criterionValue > criticalValue
         elif type == 'STRUCT':
             def done(generation, newGeneration, equalGenerations, percentage, stopLimit):
                 equalIndividuals = len(list(filter(lambda x: x, [len([ z for z in newGeneration if z.equals(y)]) > 0 for y in generation])))

@@ -1,7 +1,6 @@
 #!/bin/python3
 
 import random as rd
-import copy
 from character.character import cloneCharacter
 
 class CrossingOverFactory:
