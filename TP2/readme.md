@@ -4,21 +4,26 @@ Python 3
 # Ejecución
 Para ejecutar el programa, situarse en la carpeta TP2 y ejecutar en consola:
 ```
-python3 main.py [Clase Objetivo] 
+python3 main.py [Clase Objetivo] [ubicación de la carpeta de archivos de prueba]
 ```
 
-CROSSING-OVER ANNULAR
-MUTATION LIM-MULTIGEN
-SELECTION ELITE UNIV ELITE UNIV
-IMPLEMENTATION FILL-ALL
-STOP-CRITERION GENERATIONS 100
-PM 0.75
-CLASS WARRIOR
-T 75
-T2Thresh 0.75
-a 0.75
-b 0.25
-PQTY 10
+# Archivos de Configuraciones
+
+Es necesario el archivo solver.config, que tiene la siguiente forma (el orden de las líneas no importa):
+
+    CROSSING-OVER [Método]
+    MUTATION [Método]
+    SELECTION [M1, M2, M3, M4]
+    IMPLEMENTATION [Método]
+    STOP-CRITERION [Método, Parámetro Crítico]
+    PM [Probabilidad de Mutación]
+    CLASS [ Una de WARRIOR, ARCHER, DEFENDER, SPY ]
+    T [Temperatura de Boltzmann]
+    T2Thresh [Threshold de Torneos 2]
+    a [Porcentaje de M1 para selección de Padres]
+    b [Porcentaje de M3 para selección de individuos de la nueva generación]
+    PQTY [Cantidad de Padres]
+
 
 Operadores Genéticos
 CROSSING-OVER (Cruce):
