@@ -24,6 +24,7 @@ Es necesario el archivo solver.config, que tiene la siguiente forma (el orden de
     b [Porcentaje de M3 para selección de individuos de la nueva generación]
     PQTY [Cantidad de Padres]
 
+Hay dos ejemplos, "solver.config" y "solver.config2" 
 
 Operadores Genéticos
 CROSSING-OVER (Cruce):
