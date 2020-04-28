@@ -14,7 +14,7 @@ class CrossingOverFactory:
                 locus = rd.randint(0, len(keys)-1)
                 rd.shuffle(generation)
                 shuffledParents = generation
-                for i in range(0, len(shuffledParents), 2):
+                for i in range(0, len(shuffledParents)-1, 2):
                     p1, p2 = shuffledParents[i], shuffledParents[i+1]
                     p1p = cloneCharacter(p1)
                     p2p = cloneCharacter(p2)
@@ -34,7 +34,7 @@ class CrossingOverFactory:
                 locus2 = rd.randint(locus1+1, len(keys)-1)
                 rd.shuffle(generation)
                 shuffledParents = generation
-                for i in range(0, len(shuffledParents), 2):
+                for i in range(0, len(shuffledParents)-1, 2):
                     p1, p2 = shuffledParents[i], shuffledParents[i+1]
                     p1p = cloneCharacter(p1)
                     p2p = cloneCharacter(p2)
@@ -54,7 +54,7 @@ class CrossingOverFactory:
                 # TODO checkear el // 2 + 1
                 length = rd.randint(0, len(keys) // 2)
                 rd.shuffle(generation)
-                for i in range(0, len(generation), 2):
+                for i in range(0, len(generation)-1, 2):
                     p1, p2 = generation[i], generation[i+1]
                     p1p = cloneCharacter(p1)
                     p2p = cloneCharacter(p2)
@@ -74,7 +74,7 @@ class CrossingOverFactory:
                 keys = list(generation[0].genes.keys())
                 rd.shuffle(generation)
                 shuffledParents = generation
-                for i in range(0, len(shuffledParents), 2):
+                for i in range(0, len(shuffledParents) - 1, 2):
                     p1, p2 = shuffledParents[i], shuffledParents[i+1]
                     p1p = cloneCharacter(p1)
                     p2p = cloneCharacter(p2)
