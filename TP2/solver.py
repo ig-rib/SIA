@@ -14,7 +14,7 @@ import generationZeroGenerator as gzg
 class Solver:
     def __init__(self, domains, characterClass, configDict):
         
-        genZero = gzg.GenerationZeroGenerator(characterClass).generateCharacters(10, domains)
+        genZero = gzg.GenerationZeroGenerator(characterClass).generateCharacters(int(configDict['PQTY']), domains)
 
         stopLimit = float(configDict[ct.stopCriterion['name']][1])
         
