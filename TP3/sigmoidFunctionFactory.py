@@ -17,7 +17,7 @@ class SigmoidFunctionFactory:
             def g(x):
                 return math.tanh(self.beta * x)
             def gPrime(x):
-                return self.beta / math.cosh(self.beta * x) ** 2
+                return g(x) * (1-g(x))
         elif funcType == logistic:
             def g(x):
                 return 1 / (1 + math.exp(-2*self.beta*x))

@@ -33,6 +33,7 @@ class SimpleStepPerceptron(Perceptron):
                 self.bestW = self.w
             # print(self.bestW, self.w, error)
             i += 1
+        self.w = self.bestW
 
     def classify(self, x):
         return 1 if np.sign(np.dot(self.w, x)) > self.w0 else -1 
