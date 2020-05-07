@@ -25,7 +25,7 @@ class SimpleNonLinearPerceptron(Perceptron):
         self.gPrime = gPrime
         self.w = np.random.random(dimension+1)
     
-    def train(self, X, r = None, minError = 1e-3, epochs = 1000):
+    def train(self, X, r = None, minError = 1e-13, epochs = 1000):
         if r != None:
             self.r = r
         error = sys.maxsize
@@ -40,8 +40,14 @@ class SimpleNonLinearPerceptron(Perceptron):
                 deltaW = (x[1] - self.g(excitation)) * prime * self.r * np.array(x[0])
                 self.w = self.w + deltaW
             currentClassifications = [self.classify(y[0]) for y in points]
-            absSubtractions = [ np.abs(err) ** 2 for err in np.subtract(actualYs, currentClassifications) ]
-            error = sum(absSubtractions) / 2
+            squerr = 0
+            for i in range(len(points)):
+                currClass = self.classify(points[i][0])
+                realClass = points[i][1]
+                squerr = squerr + (realClass - currClass) ** 2
+            # absSubtractions = [ np.abs(err) ** 2 for err in np.subtract(actualYs, currentClassifications) ]
+            # error = sum(absSubtractions) / 2
+            error = squerr / 2
             if error < bestError:
                 bestError = error
                 self.bestW = self.w
