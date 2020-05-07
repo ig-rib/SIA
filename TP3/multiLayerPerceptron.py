@@ -66,8 +66,8 @@ sff1 = sff.SigmoidFunctionFactory(0.5)
 tanhFunc, tanhPrime = sff1.getFunctionAndDerivative(sff.tanh)
 logisticFunc, logisticPrime = sff1.getFunctionAndDerivative(sff.logistic)
 
-mlp = MultiLayerPerceptron(0.5, tanhFunc, tanhPrime, 2, [3], 1)
+mlp = MultiLayerPerceptron(0.5, tanhFunc, tanhPrime, 2, [3, 4, 5], 1)
 mlp.train(AndX, 0.5, 0.1, 1000)
 
 results = [(d, mlp.classify(d)) for d in domain]
-results
+print(results)
