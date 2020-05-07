@@ -27,46 +27,60 @@ def efficientLogisticPrime(x):
 # END CHECK -- OK
 
 class MultiLayerPerceptron(Perceptron):
-    def __init__(self, r, g, gPrime, inputDimension=2, middleLayerDimensions=[4,5], outputLayerDimension=1):
+    def __init__(self, r, g, gPrime, inputDimension=2, middleLayerDimensions=[4,5], outputLayerDimension=1, K=5, a=0.0001, b=0.00001):
         self.r = r
         self.g = g
         self.gPrime = gPrime
-
-        #Weights for layer 1
-        self.wByLayer = {
+        self.K = K
+        self.a = a
+        self.b = b
+        
+        self.wByLayer = { #Weights for layer 1
             1: np.asmatrix(np.random.uniform(size=(inputDimension, middleLayerDimensions[0])))
         }
-        #Weights for layers 2 to (M-1)
-        for i in range(2, len(middleLayerDimensions) + 1):
+        for i in range(2, len(middleLayerDimensions) + 1): #Weights for layers 2 to (M-1)
             self.wByLayer[i] = np.asmatrix(np.random.uniform(size=(middleLayerDimensions[i-2], middleLayerDimensions[i-1])))
-        #Weights for layer M
-        self.wByLayer[len(middleLayerDimensions)+2-1] = np.asmatrix(np.random.uniform(size=(middleLayerDimensions[-1], outputLayerDimension)))
+        self.wByLayer[len(middleLayerDimensions)+2-1] = np.asmatrix(np.random.uniform(size=(middleLayerDimensions[-1], outputLayerDimension))) #Weights for layer M
 
-        #Biases for layer 1
-        self.bByLayer = {
+        self.bByLayer = {   #Biases for layer 1
             1: np.asmatrix(np.random.uniform(size=(1, middleLayerDimensions[0])))
         }
-        #Biases for layers 2 to (M-1)
-        for i in range(2, len(middleLayerDimensions) + 2 - 1):
+        for i in range(2, len(middleLayerDimensions) + 2 - 1): #Biases for layers 2 to (M-1)
             self.bByLayer[i] = np.asmatrix(np.random.uniform(size=(1, middleLayerDimensions[i-1])))
-        #Biases for layer M
-        self.bByLayer[len(middleLayerDimensions)+2-1] = np.asmatrix(np.random.uniform(size=(1, outputLayerDimension)))
+        self.bByLayer[len(middleLayerDimensions)+2-1] = np.asmatrix(np.random.uniform(size=(1, outputLayerDimension))) #Biases for layer M
 
-    def train(self, X, y, r=None, minError=1e-3, epochs=1000):
+    def train(self, X, y, r=None, minError=1e-3, epochs=1000, adaptative=False):
         if r != None:
             self.r = r
         error = [sys.maxsize]
         ep = 0
-
+        kA = 0
+        kB = 0
         while error[0] > minError and ep < epochs:
             for index in range(len(X)):
                 O, h, V = self._forwardPropagate(X[index])
                 deltas = self._backPropagate(O, h, V, y[index])
                 self._updateWeights(deltas, V, h)
-            error = 0
+            ## Error part
+            newError = 0
             for index in range(len(X)):
-                error += (self.classify(X[index]) - y[index]) ** 2
-            error /= 2
+                newError += (self.classify(X[index]) - y[index]) ** 2
+            newError /= 2
+            if adaptative:
+                ## Adaptative Error
+                if newError < error:
+                    kA += 1
+                    kB = 0
+                elif newError > error:
+                    kB += 1
+                    kA = 0
+                if kA >= self.K:
+                    kA = 0
+                    self.r += self.a
+                if kB >= self.K:
+                    kB = 0
+                    self.r -= self.r * self.b
+            error = newError
 
     def _updateWeights(self, deltas, V, h):
         for i in sorted(deltas.keys()):
@@ -105,16 +119,3 @@ class MultiLayerPerceptron(Perceptron):
         for layerNo in self.wByLayer.keys():
             out = self.g(np.matmul(out, self.wByLayer[layerNo]) + self.bByLayer[layerNo])
         return out
-
-mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 2, [4, 3, 4], 1)
-D = [[-1, 1], [-1, -1], [1, -1], [1, 1]]
-ys = [-1 if x[0] == x[1] else 1 for x in D]
-# ys = [ min(x) for x in D ]
-D[:] = [ np.matrix(d) for d in D ]
-for d in D:
-    print(mlp.forwardPropagate(d))
-
-mlp.train(D, ys, 0.01, epochs=sys.maxsize)
-
-for j in range(len(D)):
-    print(mlp.forwardPropagate(D[j]), ys[j])
