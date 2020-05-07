@@ -55,22 +55,25 @@ class MultiLayerPerceptron(Perceptron):
     def train(self, X, y, r=None, minError=1e-3, epochs=1000):
         if r != None:
             self.r = r
-        error = sys.maxsize
+        error = [sys.maxsize]
         ep = 0
 
-        for ep in range(epochs):
-
-
+        while error[0] > minError and ep < epochs:
             for index in range(len(X)):
                 O, h, V = self._forwardPropagate(X[index])
                 deltas = self._backPropagate(O, h, V, y[index])
                 self._updateWeights(deltas, V, h)
+            error = 0
+            for index in range(len(X)):
+                error += (self.classify(X[index]) - y[index]) ** 2
+            error /= 2
 
     def _updateWeights(self, deltas, V, h):
         for i in sorted(deltas.keys()):
             DeltaW = np.matmul(V[i-1].T, deltas[i].T)
             self.wByLayer[i] -= DeltaW * self.r
             self.bByLayer[i] -= deltas[i].T * self.r
+
     def _backPropagate(self, Output, h, V, y):
         deltas = {}
         M = len(self.wByLayer.keys())
@@ -80,6 +83,7 @@ class MultiLayerPerceptron(Perceptron):
             prime = self.gPrime(h[jj]).T
             deltas[jj] = np.multiply(prime, aux)
         return deltas
+
     def _forwardPropagate(self, x):
         V = { 0: x }
         h = {}
@@ -94,16 +98,23 @@ class MultiLayerPerceptron(Perceptron):
     def forwardPropagate(self, x):
         O, _, _ = self._forwardPropagate(x)
         return O
+    
+    def classify(self, x):
+        currV = x
+        out = x
+        for layerNo in self.wByLayer.keys():
+            out = self.g(np.matmul(out, self.wByLayer[layerNo]) + self.bByLayer[layerNo])
+        return out
 
-mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 2, [4, 5, 7, 10], 1)
+mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 2, [4, 3, 4], 1)
 D = [[-1, 1], [-1, -1], [1, -1], [1, 1]]
 ys = [-1 if x[0] == x[1] else 1 for x in D]
-ys = [ min(x) for x in D ]
+# ys = [ min(x) for x in D ]
 D[:] = [ np.matrix(d) for d in D ]
 for d in D:
     print(mlp.forwardPropagate(d))
 
-mlp.train(D, ys, 0.1)
+mlp.train(D, ys, 0.01, epochs=sys.maxsize)
 
 for j in range(len(D)):
     print(mlp.forwardPropagate(D[j]), ys[j])
