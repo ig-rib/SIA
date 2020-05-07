@@ -5,7 +5,7 @@ import sigmoidFunctionFactory as sff
 import random
 import numpy as np
 import sys
-from multiLayerPerceptron import MultiLayerPerceptron, tanh, tanhPrime
+from multiLayerPerceptron import MultiLayerPerceptron, tanh, tanhPrime, logistic, logisticPrime
 
 # def printResults(functionVector, perceptron):
 #     worked = True
@@ -42,7 +42,7 @@ tX = [ x[0] for x in trainingX ]
 tY = [ x[1] for x in trainingX ]
 
 mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 4, [4, 2], 1,  a=1e-7, b=1e-4)
-mlp.train(tX, tY)
+mlp.train(tX, tY, adaptative=True)
 
 for x in X:
     print(mlp.classify(x[0]), x[1])

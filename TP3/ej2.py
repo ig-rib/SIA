@@ -30,7 +30,7 @@ data1
 
 w0 = -0.1
 X = [ [(y[0], y[1], y[2]), y[3]] for y in data1]
-percentage = 0.5
+percentage = 0.7
 random.shuffle(X)
 splittingIndex = int(len(X)*percentage)
 trainingX = X[:splittingIndex]
