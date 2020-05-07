@@ -30,7 +30,7 @@ data1
 
 w0 = -0.1
 X = [ [(y[0], y[1], y[2]), y[3]] for y in data1]
-percentage = 0.9
+percentage = 0.5
 random.shuffle(X)
 splittingIndex = int(len(X)*percentage)
 trainingX = X[:splittingIndex]
@@ -43,10 +43,10 @@ logisticFunc, logisticPrime = sff1.getFunctionAndDerivative(sff.logistic)
 
 ## Instantiating non-linear perceptrons
 tanhSNLP = SimpleNonLinearPerceptron(len(X[0][0]), 0.1, tanhFunc, tanhPrime, w0 = w0)
-logisticSNLP = SimpleNonLinearPerceptron(len(X[0][0]), 0.01, logisticFunc, logisticPrime, w0 = w0)
+logisticSNLP = SimpleNonLinearPerceptron(len(X[0][0]), 0.05, logisticFunc, logisticPrime, w0 = w0)
 
 # tanhSNLP.train(trainingX, minError=0.1, epochs=1000)
-logisticSNLP.train(trainingX, minError=0.1, epochs=10000)
+logisticSNLP.train(trainingX)
 
 # printResults(testX, tanhSNLP)
 printResults(trainingX, logisticSNLP)

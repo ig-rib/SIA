@@ -1,5 +1,3 @@
-#!/bin/python3
-
 import numpy as np
 import sys
 
@@ -25,7 +23,7 @@ class SimpleNonLinearPerceptron(Perceptron):
         self.gPrime = gPrime
         self.w = np.random.random(dimension+1)
     
-    def train(self, X, r = None, minError = 1e-13, epochs = 1000):
+    def train(self, X, r = None, minError = 1e-5, epochs = sys.maxsize):
         if r != None:
             self.r = r
         error = sys.maxsize
@@ -41,9 +39,9 @@ class SimpleNonLinearPerceptron(Perceptron):
                 self.w = self.w + deltaW
             currentClassifications = [self.classify(y[0]) for y in points]
             squerr = 0
-            for i in range(len(points)):
-                currClass = self.classify(points[i][0])
-                realClass = points[i][1]
+            for j in range(len(points)):
+                currClass = self.classify(points[j][0])
+                realClass = points[j][1]
                 squerr = squerr + (realClass - currClass) ** 2
             # absSubtractions = [ np.abs(err) ** 2 for err in np.subtract(actualYs, currentClassifications) ]
             # error = sum(absSubtractions) / 2
