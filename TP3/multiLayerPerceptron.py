@@ -53,8 +53,8 @@ class MultiLayerPerceptron(Perceptron):
         self.bByLayer[len(middleLayerDimensions)+2-1] = np.asmatrix(np.random.uniform(size=(1, outputLayerDimension)))
 
     def train(self, X, y, r=None, minError=1e-3, epochs=1000):
-        if r == None:
-            r = self.r
+        if r != None:
+            self.r = r
         error = sys.maxsize
         ep = 0
 
@@ -69,8 +69,8 @@ class MultiLayerPerceptron(Perceptron):
     def _updateWeights(self, deltas, V, h):
         for i in sorted(deltas.keys()):
             DeltaW = np.matmul(V[i-1].T, deltas[i].T)
-            self.wByLayer[i] += DeltaW * self.r
-
+            self.wByLayer[i] -= DeltaW * self.r
+            self.bByLayer[i] -= deltas[i].T * self.r
     def _backPropagate(self, Output, h, V, y):
         deltas = {}
         M = len(self.wByLayer.keys())
@@ -86,7 +86,7 @@ class MultiLayerPerceptron(Perceptron):
         currV = x
         for layerNo in self.wByLayer.keys():
             h[layerNo] = np.matmul(currV, self.wByLayer[layerNo])
-            # h[layerNo] += self.bByLayer[layerNo]
+            h[layerNo] += self.bByLayer[layerNo]
             V[layerNo] = self.g(h[layerNo])
             currV = V[layerNo]
         return currV, h, V
@@ -95,15 +95,15 @@ class MultiLayerPerceptron(Perceptron):
         O, _, _ = self._forwardPropagate(x)
         return O
 
-mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 2, [4], 1)
+mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 2, [4, 5, 7, 10], 1)
 D = [[-1, 1], [-1, -1], [1, -1], [1, 1]]
 ys = [-1 if x[0] == x[1] else 1 for x in D]
-# ys = [ min(x) for x in D ]
+ys = [ min(x) for x in D ]
 D[:] = [ np.matrix(d) for d in D ]
 for d in D:
     print(mlp.forwardPropagate(d))
 
 mlp.train(D, ys, 0.1)
 
-for d in D:
-    print(mlp.forwardPropagate(d))
+for j in range(len(D)):
+    print(mlp.forwardPropagate(D[j]), ys[j])
