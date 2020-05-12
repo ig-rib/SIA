@@ -52,11 +52,11 @@ class MultiLayerPerceptron(Perceptron):
     def train(self, X, y, r=None, minError=1e-3, epochs=1000, adaptative=False):
         if r != None:
             self.r = r
-        error = [sys.maxsize]
+        error = sys.maxsize
         ep = 0
         kA = 0
         kB = 0
-        while error[0] > minError and ep < epochs:
+        while error > minError and ep < epochs:
             for index in range(len(X)):
                 O, h, V = self._forwardPropagate(X[index])
                 deltas = self._backPropagate(O, h, V, y[index])
@@ -64,7 +64,7 @@ class MultiLayerPerceptron(Perceptron):
             ## Error part
             newError = 0
             for index in range(len(X)):
-                newError += (self.classify(X[index]) - y[index]) ** 2
+                newError += np.power((self.classify(X[index]) - y[index]), 2).mean()
             newError /= 2
             if adaptative:
                 ## Adaptative Error
@@ -92,7 +92,7 @@ class MultiLayerPerceptron(Perceptron):
     def _backPropagate(self, Output, h, V, y):
         deltas = {}
         M = len(self.wByLayer.keys())
-        deltas[M] = np.multiply(self.gPrime(h[M]), V[M] - y)
+        deltas[M] = np.multiply(self.gPrime(h[M]), V[M] - y).T
         for jj in range(M-1, 0, -1):
             aux = np.matmul(self.wByLayer[jj+1], deltas[jj+1])
             prime = self.gPrime(h[jj]).T

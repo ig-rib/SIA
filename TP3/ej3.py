@@ -17,12 +17,21 @@ for i in range(10):
         currNumber.append(list(map(float, setFileLines[j].rstrip().split(' '))))
     numbers[i] = np.asmatrix(currNumber).reshape(1, 35) / 35
 
-X = list(numbers.values())
+# X = list(numbers.values())
+# y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
+
+# mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 35, [4], 1,  a=1e-7, b=1e-4)
+# mlp.train(X, y, adaptative=False)
+
+# for i in range(len(X)):
+#     print(mlp.classify(X[i]), y[i])
+
+X = []
+for i in range(0, 10, 1):
+    X.append(np.asmatrix(i*0.1))
 y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
 
-mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 35, [16, 16], 1,  a=1e-7, b=1e-4)
-mlp.train(X, y, adaptative=False)
-
+mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 1, [5, 5, 5], 1,  a=1e-7, b=1e-4)
+mlp.train(X, y, epochs=sys.maxsize, adaptative=False)
 for i in range(len(X)):
     print(mlp.classify(X[i]), y[i])
-
