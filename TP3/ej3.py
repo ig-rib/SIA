@@ -17,14 +17,14 @@ for i in range(10):
         currNumber.append(list(map(float, setFileLines[j].rstrip().split(' '))))
     numbers[i] = np.asmatrix(currNumber).reshape(1, 35) / 35
 
-# X = list(numbers.values())
-# y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
+X = list(numbers.values())
+y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
 
-# mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 35, [4], 1,  a=1e-7, b=1e-4)
-# mlp.train(X, y, adaptative=False)
+mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 35, [4, 4, 4, 2], 1,  a=1e-7, b=1e-4)
+mlp.train(X, y, adaptative=False)
 
-# for i in range(len(X)):
-#     print(mlp.classify(X[i]), y[i])
+for i in range(len(X)):
+    print(mlp.classify(X[i]), y[i])
 
 #-----------------------------------------------------#
 
@@ -40,20 +40,20 @@ for i in range(10):
 
 #-----------------------------------------------------#
 
-setFile = open('ej3Conjunto.tsv')
+# setFile = open('ej3Conjunto.tsv')
 
-X = [ [np.asmatrix([y[0], y[1], y[2], y[3]]), y[4]] for y in [ [float(x) for x in line.rstrip().split(' ')] for line in setFile.readlines() ]]
+# X = [ [np.asmatrix([y[0], y[1], y[2], y[3]]), y[4]] for y in [ [float(x) for x in line.rstrip().split(' ')] for line in setFile.readlines() ]]
 
-percentage = 0.50
-random.shuffle(X)
-splittingIndex = int(len(X)*percentage)
-trainingX = X[:splittingIndex]
-testX = X[splittingIndex:]
+# percentage = 0.50
+# random.shuffle(X)
+# splittingIndex = int(len(X)*percentage)
+# trainingX = X[:splittingIndex]
+# testX = X[splittingIndex:]
 
-tX = [ x[0] for x in trainingX ]
-tY = [ x[1] for x in trainingX ]
+# tX = [ x[0] for x in trainingX ]
+# tY = [ x[1] for x in trainingX ]
 
-mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 4, [4, 2], 1,  a=1e-7, b=1e-4)
-mlp.train(tX, tY, epochs=50000, adaptative=True)
-for x in X:
-    print(mlp.classify(x[0]), x[1])
+# mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 4, [4, 4, 2], 1,  a=1e-7, b=1e-4)
+# mlp.train(tX, tY, adaptative=False)
+# for x in X:
+#     print(mlp.classify(x[0]), x[1])

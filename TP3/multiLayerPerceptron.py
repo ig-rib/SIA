@@ -49,7 +49,7 @@ class MultiLayerPerceptron(Perceptron):
             self.bByLayer[i] = np.asmatrix(np.random.uniform(size=(1, middleLayerDimensions[i-1])))
         self.bByLayer[len(middleLayerDimensions)+2-1] = np.asmatrix(np.random.uniform(size=(1, outputLayerDimension))) #Biases for layer M
 
-    def train(self, X, y, r=None, minError=1e-3, epochs=1000, adaptative=False):
+    def train(self, X, y, r=None, minError=1e-3, epochs=10000, adaptative=False):
         if r != None:
             self.r = r
         error = sys.maxsize
