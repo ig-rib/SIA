@@ -7,42 +7,22 @@ import numpy as np
 import sys
 from multiLayerPerceptron import MultiLayerPerceptron, tanh, tanhPrime, logistic, logisticPrime
 
-# def printResults(functionVector, perceptron):
-#     worked = True
-#     for x in functionVector:
-#         print('\t', x[0], perceptron.classify(x[0]), f'(valor real es {x[1]})')
-#         worked = worked and perceptron.classify(x[0]) == x[1]
-#     print(f'w = {perceptron.w}')
+setFileLines = open('ej3Conjunto.tsv').readlines()
 
-# mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 2, [4, 2], 1,  a=1e-7, b=1e-4)
-# D = [[-1, 1], [-1, -1], [1, -1], [1, 1]]
-# ys = [-1 if x[0] == x[1] else 1 for x in D]
-# # ys = [ min(x) for x in D ]
-# D[:] = [ np.matrix(d) for d in D ]
-# for d in D:
-#     print(mlp.forwardPropagate(d))
+numbers = {}
 
-# # The working configuration
-# mlp.train(D, ys, 0.1, minError= 1e-4, epochs=sys.maxsize, adaptative=False)
+for i in range(10):
+    currNumber = []
+    for j in range(7):
+        currNumber.append(list(map(float, setFileLines[j].rstrip().split(' '))))
+    numbers[i] = np.asmatrix(currNumber).reshape(1, 35) / 35
 
-# for j in range(len(D)):
-#     print(mlp.forwardPropagate(D[j]), ys[j])
+X = list(numbers.values())
+y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
 
-setFile = open('ej3Conjunto.tsv')
+mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 35, [16, 16], 1,  a=1e-7, b=1e-4)
+mlp.train(X, y, adaptative=False)
 
-X = [ [np.asmatrix([y[0], y[1], y[2], y[3]]), y[4]] for y in [ [float(x) for x in line.rstrip().split(' ')] for line in setFile.readlines() ]]
+for i in range(len(X)):
+    print(mlp.classify(X[i]), y[i])
 
-percentage = 0.50
-random.shuffle(X)
-splittingIndex = int(len(X)*percentage)
-trainingX = X[:splittingIndex]
-testX = X[splittingIndex:]
-
-tX = [ x[0] for x in trainingX ]
-tY = [ x[1] for x in trainingX ]
-
-mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 4, [4, 2], 1,  a=1e-7, b=1e-4)
-mlp.train(tX, tY, adaptative=True)
-
-for x in X:
-    print(mlp.classify(x[0]), x[1])

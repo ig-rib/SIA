@@ -81,6 +81,7 @@ class MultiLayerPerceptron(Perceptron):
                     kB = 0
                     self.r -= self.r * self.b
             error = newError
+            ep += 1
 
     def _updateWeights(self, deltas, V, h):
         for i in sorted(deltas.keys()):
