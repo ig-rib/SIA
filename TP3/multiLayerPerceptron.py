@@ -7,7 +7,7 @@ import sys
 from collections import deque
 import random
 
-beta = 1/70
+beta = 1
 
 def tanh(x):
     return np.tanh(beta * x)
