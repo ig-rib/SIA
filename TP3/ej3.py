@@ -34,9 +34,11 @@ domain = [ [-1, 1], [1, -1], [-1, -1], [1, 1] ]
 XORys = [ -1 if x[0] == x[1] else 1 for x in domain ]
 domain[:] = [ np.asmatrix(x) for x in domain ]
 
-mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 2, [4], 1,  a=1e-7, b=1e-4)
-mlp.train(domain, XORys, adaptative=False)
+mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 2, [4, 2], 1,  a=1e-7, b=1e-4)
+mlp.train(domain, XORys, epochs=10000, adaptative=True)
 
+for i in range(len(domain)):
+    print(mlp.classify(domain[i]), XORys[i])
 
 #-----------------------------------------------------#
 # LEER CADA LINEA DEL CONJUNTO CARACTERIZANDOLA SEGUN EL ULTIMO BIT

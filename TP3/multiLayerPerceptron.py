@@ -56,7 +56,7 @@ class MultiLayerPerceptron(Perceptron):
         
         self.deltas[len(middleLayerDimensions)+1] = np.asmatrix(np.zeros(shape=(outputLayerDimension, 1)))
 
-    def train(self, X, y, r=None, minError=1e-6, epochs=100000, adaptative=False):
+    def train(self, X, y, r=None, minError=1e-3, epochs=100000, adaptative=False):
         if r != None:
             self.r = r
         error = sys.maxsize
@@ -69,9 +69,9 @@ class MultiLayerPerceptron(Perceptron):
                 O, h, V = self._forwardPropagate(X[index])
                 # deltas = self._backPropagate(O, h, V, y[index])
                 deltas = self._backPropagateNoPrime(O, h, V, y[index])
-                self._updateWeights(deltas, V, h)
-                # self._updateWeightsMomentum(deltas, self.deltas, V, h)
-                # self.deltas = deltas
+                # self._updateWeights(deltas, V, h)
+                self._updateWeightsMomentum(deltas, self.deltas, V, h)
+                self.deltas = deltas
             ## Error part
             newError = 0
             for index in range(len(X)):
