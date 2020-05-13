@@ -5,12 +5,14 @@ from perceptron import Perceptron, SimpleNonLinearPerceptron
 import sigmoidFunctionFactory as sff
 import sys
 from collections import deque
+import random
 
+beta = 1/70
 
 def tanh(x):
-    return np.tanh(x)
+    return np.tanh(beta * x)
 def tanhPrime(x):
-    return 1 - np.power(tanh(x), 2)
+    return 1 - np.power(tanh(beta * x), 2)
 
 #CHECK -- OK
 def logistic(x):
@@ -35,10 +37,13 @@ class MultiLayerPerceptron(Perceptron):
         self.a = a
         self.b = b
         
+        self.deltas = {1 : np.asmatrix(np.zeros(shape=(middleLayerDimensions[0], 1)))}
+        
         self.wByLayer = { #Weights for layer 1
             1: np.asmatrix(np.random.uniform(size=(inputDimension, middleLayerDimensions[0])))
         }
         for i in range(2, len(middleLayerDimensions) + 1): #Weights for layers 2 to (M-1)
+            self.deltas[i] = np.asmatrix(np.zeros(shape=(middleLayerDimensions[i-1], 1)))
             self.wByLayer[i] = np.asmatrix(np.random.uniform(size=(middleLayerDimensions[i-2], middleLayerDimensions[i-1])))
         self.wByLayer[len(middleLayerDimensions)+2-1] = np.asmatrix(np.random.uniform(size=(middleLayerDimensions[-1], outputLayerDimension))) #Weights for layer M
 
@@ -48,8 +53,10 @@ class MultiLayerPerceptron(Perceptron):
         for i in range(2, len(middleLayerDimensions) + 2 - 1): #Biases for layers 2 to (M-1)
             self.bByLayer[i] = np.asmatrix(np.random.uniform(size=(1, middleLayerDimensions[i-1])))
         self.bByLayer[len(middleLayerDimensions)+2-1] = np.asmatrix(np.random.uniform(size=(1, outputLayerDimension))) #Biases for layer M
+        
+        self.deltas[len(middleLayerDimensions)+1] = np.asmatrix(np.zeros(shape=(outputLayerDimension, 1)))
 
-    def train(self, X, y, r=None, minError=1e-3, epochs=10000, adaptative=False):
+    def train(self, X, y, r=None, minError=1e-6, epochs=100000, adaptative=False):
         if r != None:
             self.r = r
         error = sys.maxsize
@@ -57,10 +64,14 @@ class MultiLayerPerceptron(Perceptron):
         kA = 0
         kB = 0
         while error > minError and ep < epochs:
+            # random.shuffle(X)
             for index in range(len(X)):
                 O, h, V = self._forwardPropagate(X[index])
-                deltas = self._backPropagate(O, h, V, y[index])
+                # deltas = self._backPropagate(O, h, V, y[index])
+                deltas = self._backPropagateNoPrime(O, h, V, y[index])
                 self._updateWeights(deltas, V, h)
+                # self._updateWeightsMomentum(deltas, self.deltas, V, h)
+                # self.deltas = deltas
             ## Error part
             newError = 0
             for index in range(len(X)):
@@ -82,6 +93,13 @@ class MultiLayerPerceptron(Perceptron):
                     self.r -= self.r * self.b
             error = newError
             ep += 1
+        print('Number of epochs', ep, '\nError', error)
+
+    def _updateWeightsMomentum(self, deltas, oldDeltas, V, h):
+        for i in sorted(deltas.keys()):
+            DeltaW = np.matmul(V[i-1].T, deltas[i].T  * self.r) + 0.9 * oldDeltas[i].T
+            self.wByLayer[i] -= DeltaW
+            self.bByLayer[i] -= (deltas[i].T * self.r + 0.9 * oldDeltas[i].T)
 
     def _updateWeights(self, deltas, V, h):
         for i in sorted(deltas.keys()):
@@ -97,6 +115,15 @@ class MultiLayerPerceptron(Perceptron):
             aux = np.matmul(self.wByLayer[jj+1], deltas[jj+1])
             prime = self.gPrime(h[jj]).T
             deltas[jj] = np.multiply(prime, aux)
+        return deltas
+
+    def _backPropagateNoPrime(self, Output, h, V, y):
+        deltas = {}
+        M = len(self.wByLayer.keys())
+        deltas[M] = beta * (V[M] - y).T
+        for jj in range(M-1, 0, -1):
+            aux = np.matmul(self.wByLayer[jj+1], deltas[jj+1])
+            deltas[jj] = beta * aux
         return deltas
 
     def _forwardPropagate(self, x):
