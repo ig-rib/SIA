@@ -13,7 +13,7 @@ beta = 1
 def tanh(x):
     return np.tanh(beta * x)
 def tanhPrime(x):
-    return 1 - np.power(tanh(beta * x), 2)
+    return beta * (1 - np.power(tanh(beta * x), 2))
 
 #CHECK -- OK
 def logistic(x):
@@ -66,7 +66,7 @@ class MultiLayerPerceptron(Perceptron):
         elif update == ct.UPDATE_NORMAL:
             self.updateFunc = self._updateWeights
 
-    def train(self, X, y, r=None, minError=1e-3, epochs=100000, adaptative=False):
+    def train(self, X, y, r=None, minError=1e-5, epochs=100000, adaptative=False):
         if r != None:
             self.r = r
         error = sys.maxsize
@@ -107,9 +107,9 @@ class MultiLayerPerceptron(Perceptron):
 
     def _updateWeightsMomentum(self, deltas, V, h, oldDeltas = None):
         for i in sorted(deltas.keys()):
-            DeltaW = np.matmul(V[i-1].T, deltas[i].T  * self.r) + 0.9 * oldDeltas[i].T
-            self.wByLayer[i] -= DeltaW
-            self.bByLayer[i] -= (deltas[i].T * self.r + 0.9 * oldDeltas[i].T)
+            DeltaW = np.matmul(V[i-1].T, deltas[i].T  * self.r) - 0.9 * oldDeltas[i].T
+            self.wByLayer[i] -= DeltaW / deltas[i].shape[0]
+            self.bByLayer[i] -= (deltas[i].T * self.r - 0.9 * oldDeltas[i].T)
 
     def _updateWeights(self, deltas, V, h, oldDeltas = None):
         for i in sorted(deltas.keys()):
