@@ -23,7 +23,7 @@ class SimpleNonLinearPerceptron(Perceptron):
         self.gPrime = gPrime
         self.w = np.random.random(dimension+1)
     
-    def train(self, X, r = None, minError = 1e-3, epochs = sys.maxsize):
+    def train(self, X, r = None, minError = 5e-3, epochs = sys.maxsize):
         if r != None:
             self.r = r
         error = sys.maxsize

@@ -6,19 +6,19 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 
 
-def printResults(functionVector, perceptron):
+def printResults(functionVector, perceptron, scaler):
     worked = True
     correct = 0
     error = 0
     for x in functionVector:
         pred = perceptron.classify(x[0])
         error += (pred - x[1])**2
-        print('\t', '%.4g %.4g %.4g:' % x[0], pred, '%.4g' % (x[1]))
+        originalVector = [ x[0][i] * scaler.data_range_[i] + scaler.data_min_[i] for i in range(3) ]
+        print('\t', '%.4g %.4g %.4g: %.4g' % (*originalVector, pred * scaler.data_range_[3] + scaler.data_min_[3]), '%.4g' % (x[1] * scaler.data_range_[3] + scaler.data_min_[3]))
         worked = worked and pred == x[1]
         correct += 1 if pred == x[1] else 0
     print(error/2)
     print(f'w = {perceptron.w}')
-    print('OK') if worked else print('Not OK', correct / len(functionVector))
 
 
 setFile = open('ej2Conjunto.tsv')
@@ -49,7 +49,7 @@ logisticSNLP = SimpleNonLinearPerceptron(len(X[0][0]), 0.05, logisticFunc, logis
 logisticSNLP.train(trainingX)
 
 # printResults(testX, tanhSNLP)
-printResults(trainingX, logisticSNLP)
-printResults(testX, logisticSNLP)
+printResults(trainingX, logisticSNLP, scaler)
+printResults(testX, logisticSNLP, scaler)
 # printResults(trainingX, tanhSNLP)
 # printResults(testX, tanhSNLP)
