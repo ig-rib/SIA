@@ -10,25 +10,25 @@ import constants as ct
 
 setFileLines = open('ej3Conjunto.tsv').readlines()
 
-# numbers = {}
+numbers = {}
 
-# for i in range(10):
-#     currNumber = []
-#     for j in range(7):
-#         currNumber.append(list(map(float, setFileLines[i*7+j].rstrip().split(' '))))
-#     numbers[i] = np.asmatrix(currNumber).reshape(1, 35)
+for i in range(10):
+    currNumber = []
+    for j in range(7):
+        currNumber.append(list(map(float, setFileLines[i*7+j].rstrip().split(' '))))
+    numbers[i] = np.asmatrix(currNumber).reshape(1, 35)
 
-# X = list(numbers.values())
-# y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
+X = list(numbers.values())
+y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
 # y = [ np.asmatrix([1 if i % 2 == 0 else -1 for i in range(10)])
 #     if index == 2 or index == 3 or index == 5 or index == 7
 #     else np.asmatrix([1 if i % 2 == 1 else -1 for i in range(10)]) for index, x in enumerate(X) ]
 
-# mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [i for i in range(25, 10, -5)], 10,  a=1e-7, b=1e-4)
-# mlp.train(X, y, adaptative=True)
+mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
+mlp.train(X, y, adaptative=True)
 
-# for i in range(len(X)):
-#     print(mlp.classify(X[i]), y[i])
+for i in range(len(X)):
+    print(mlp.classify(X[i]), y[i])
 
 #-----------------------------------------------------#
 # XOR FUNCTION
