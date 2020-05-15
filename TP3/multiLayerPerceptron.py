@@ -66,16 +66,17 @@ class MultiLayerPerceptron(Perceptron):
         elif update == ct.UPDATE_NORMAL:
             self.updateFunc = self._updateWeights
 
-    def train(self, X, y, r=None, minError=1e-5, epochs=100000, adaptative=False):
+    def train(self, X, y, r=None, minError=1e-5, epochs=10000, adaptative=False):
         if r != None:
             self.r = r
         error = sys.maxsize
         ep = 0
         kA = 0
         kB = 0
+        indices = list(range(len(X)))
         while error > minError and ep < epochs:
-            # random.shuffle(X)
-            for index in range(len(X)):
+            # random.shuffle(indices)
+            for index in indices:
                 O, h, V = self._forwardPropagate(X[index])
                 deltas = self.bPropFunc(O, h, V, y[index])
                 # deltas = self._backPropagateNoPrime(O, h, V, y[index])
@@ -84,7 +85,7 @@ class MultiLayerPerceptron(Perceptron):
                 self.deltas = deltas
             ## Error part
             newError = 0
-            for index in range(len(X)):
+            for index in indices:
                 newError += np.power((self.classify(X[index]) - y[index]), 2).mean()
             newError /= 2
             if adaptative:
