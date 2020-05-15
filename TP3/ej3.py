@@ -34,15 +34,15 @@ setFileLines = open('ej3Conjunto.tsv').readlines()
 # XOR FUNCTION
 #
 
-# domain = [ [-1, 1], [1, -1], [-1, -1], [1, 1] ]
-# XORys = [ -1 if x[0] == x[1] else 1 for x in domain ]
-# domain[:] = [ np.asmatrix(x) for x in domain ]
+domain = [ [-1, 1], [1, -1], [-1, -1], [1, 1] ]
+XORys = [ -1 if x[0] == x[1] else 1 for x in domain ]
+domain[:] = [ np.asmatrix(x) for x in domain ]
 
-# mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 2, [4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME, update=ct.UPDATE_MOMENTUM)
-# mlp.train(domain, XORys, epochs=10000, adaptative=True)
+mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 2, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
+mlp.train(domain, XORys, adaptative=True)
 
-# for i in range(len(domain)):
-#     print(mlp.classify(domain[i]), XORys[i])
+for i in range(len(domain)):
+    print(mlp.classify(domain[i]), XORys[i])
 
 #-----------------------------------------------------#
 # LEER CADA LINEA DEL CONJUNTO CARACTERIZANDOLA SEGUN EL ULTIMO BIT
@@ -70,35 +70,35 @@ setFileLines = open('ej3Conjunto.tsv').readlines()
 # NUMEROS PRIMOS EXPRESADOS CON VECTORES DE 10
 #
 
-# X = [ np.asmatrix([ 1 if i == j else 0 for i in range(10) ]) for j in range(10) ]
-# y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
+X = [ np.asmatrix([ 1 if i == j else 0 for i in range(10) ]) for j in range(10) ]
+y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for index, x in enumerate(X) ]
 
-# mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 10, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME, update=ct.UPDATE_MOMENTUM)
-# mlp.train(X, y, adaptative=True)
+mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 10, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
+mlp.train(X, y, adaptative=False)
 
-# for i in range(len(X)):
-#     print(mlp.classify(X[i]), y[i])
+for i in range(len(X)):
+    print(mlp.classify(X[i]), y[i])
 
 #-----------------------------------------------------#
 # RECONOCE NUMEROS EXPRESADOS EN VECTORES DE 1X35, OUTPUTS DE 1X10? no
 #
 
-numbers = {}
+# numbers = {}
 
-for i in range(10):
-    currNumber = []
-    for j in range(7):
-        currNumber.append(list(map(float, setFileLines[j].rstrip().split(' '))))
-    numbers[i] = np.asmatrix(currNumber).reshape(1, 35)
+# for i in range(10):
+#     currNumber = []
+#     for j in range(7):
+#         currNumber.append(list(map(float, setFileLines[j].rstrip().split(' '))))
+#     numbers[i] = np.asmatrix(currNumber).reshape(1, 35)
 
-X = list(numbers.values())
-y = [ np.asmatrix([ 1 if i == j else -1 for i in range(10) ]) for j in range(10) ]
+# X = list(numbers.values())
+# y = [ np.asmatrix([ 1 if i == j else -1 for i in range(10) ]) for j in range(10) ]
 
-mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [25, 15], 10,  a=1e-7, b=1e-4, update=ct.UPDATE_MOMENTUM)
-mlp.train(X, y, adaptative=True)
+# mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [25, 15], 10,  a=1e-7, b=1e-4, update=ct.UPDATE_MOMENTUM)
+# mlp.train(X, y, adaptative=True)
 
-for i in range(len(X)):
-    print(mlp.classify(X[i]), y[i])
+# for i in range(len(X)):
+#     print(mlp.classify(X[i]), y[i])
 
 #-----------------------------------------------------#
 # RECONOCE NUMEROS EXPRESADOS EN VECTORES DE 1X35, OUTPUTS CON LA CADENA EN BINARIO?
