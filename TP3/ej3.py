@@ -24,7 +24,7 @@ y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for inde
 #     if index == 2 or index == 3 or index == 5 or index == 7
 #     else np.asmatrix([1 if i % 2 == 1 else -1 for i in range(10)]) for index, x in enumerate(X) ]
 
-mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
+mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [25, 20, 15, 10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
 mlp.train(X, y, minError=1e-4, adaptative=True)
 
 for i in range(len(X)):
