@@ -10,6 +10,25 @@ import constants as ct
 
 setFileLines = open('ej3Conjunto.tsv').readlines()
 
+#-----------------------------------------------------#
+# XOR FUNCTION
+#
+
+domain = [ [-1, 1], [1, -1], [-1, -1], [1, 1] ]
+XORys = [ -1 if x[0] == x[1] else 1 for x in domain ]
+domain[:] = [ np.asmatrix(x) for x in domain ]
+
+print('XOR Function')
+mlp = MultiLayerPerceptron(0.001, tanh, tanhPrime, 2, [10, 8, 6, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
+mlp.train(domain, XORys, epochs=20000, minError=1e-3, adaptative=False)
+
+for i in range(len(domain)):
+    print('X:', domain[i], 'Prediction:', mlp.classify(domain[i]), 'Actual Value:', XORys[i])
+
+#-----------------------------------------------------#
+# PRIMES
+#
+
 numbers = {}
 
 for i in range(10):
@@ -24,25 +43,43 @@ y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for inde
 #     if index == 2 or index == 3 or index == 5 or index == 7
 #     else np.asmatrix([1 if i % 2 == 1 else -1 for i in range(10)]) for index, x in enumerate(X) ]
 
-mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [25, 20, 15, 10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
+print('Prime Classifier')
+mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
 mlp.train(X, y, minError=1e-4, adaptative=True)
 
 for i in range(len(X)):
-    print(mlp.classify(X[i]), y[i])
+    print('X:\n', X[i].reshape(7, 5))
+    print('Prediction:', mlp.classify(X[i]), 'Actual Value:', y[i])
 
 #-----------------------------------------------------#
-# XOR FUNCTION
+# PRIMES - TRAINING & TEST SETS
 #
 
-domain = [ [-1, 1], [1, -1], [-1, -1], [1, 1] ]
-XORys = [ -1 if x[0] == x[1] else 1 for x in domain ]
-domain[:] = [ np.asmatrix(x) for x in domain ]
+fullX = [ [ X[i], 1 if i in [2, 3, 5, 7] else -1 ] for i in range(len(X)) ]
 
-mlp = MultiLayerPerceptron(0.001, tanh, tanhPrime, 2, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
-mlp.train(domain, XORys, minError=1e-3, adaptative=True)
+percentage = 0.6
+splitIndex = int(len(X) * percentage)
+random.shuffle(fullX)
+trainingX = fullX[:splitIndex]
+testX = fullX[splitIndex:]
+trainingY = [x[1] for x in trainingX]
+trainingX[:] = [x[0] for x in trainingX]
+testY = [x[1] for x in testX]
+testX[:] = [x[0] for x in testX]
 
-for i in range(len(domain)):
-    print(mlp.classify(domain[i]), XORys[i])
+print('Prime Training')
+mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
+mlp.train(trainingX, trainingY, minError=1e-4, adaptative=True)
+
+print('Results for Training Set:')
+for i in range(len(trainingX)):
+    print('X:\n', trainingX[i].reshape(7, 5))
+    print('Prediction:', mlp.classify(trainingX[i]), 'Actual Value:', trainingY[i])
+
+print('Results for Test Set:')
+for i in range(len(testX)):
+    print('X:\n', testX[i].reshape(7, 5))
+    print('Prediction:', mlp.classify(testX[i]), 'Actual Value:', testY[i])
 
 #-----------------------------------------------------#
 # LEER CADA LINEA DEL CONJUNTO CARACTERIZANDOLA SEGUN EL ULTIMO BIT
