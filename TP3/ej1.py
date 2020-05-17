@@ -39,6 +39,7 @@ def plotLine(perceptron, functionVector, title):
     plt.ylim(-3, 3)
     plt.xlim(-3, 3)
     plt.title(title)
+    plt.savefig(f'{title}.png')
     plt.show()
     print(f'{slope}*x + {intercept}')
 
