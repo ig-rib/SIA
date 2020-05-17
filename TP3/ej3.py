@@ -19,8 +19,8 @@ XORys = [ -1 if x[0] == x[1] else 1 for x in domain ]
 domain[:] = [ np.asmatrix(x) for x in domain ]
 
 print('XOR Function')
-mlp = MultiLayerPerceptron(0.001, tanh, tanhPrime, 2, [10, 8, 6, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
-mlp.train(domain, XORys, epochs=20000, minError=1e-3, adaptative=False)
+mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 2, [4, 2], 1,  a=1e-7, b=1e-4)
+mlp.train(domain, XORys, epochs=10000, minError=1e-3, adaptative=True)
 
 for i in range(len(domain)):
     print('X:', domain[i], 'Prediction:', mlp.classify(domain[i]), 'Actual Value:', XORys[i])
