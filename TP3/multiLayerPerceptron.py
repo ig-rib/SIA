@@ -74,6 +74,9 @@ class MultiLayerPerceptron(Perceptron):
         kA = 0
         kB = 0
         indices = list(range(len(X)))
+        for i in self.wByLayer.keys():
+            self.wByLayer[i]/=self.wByLayer[i].shape[0]
+            self.bByLayer[i]/=self.bByLayer[i].shape[1]
         while error > minError and ep < epochs:
             # random.shuffle(indices)
             for index in indices:
