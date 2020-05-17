@@ -18,16 +18,22 @@ domain = [ [-1, 1], [1, -1], [-1, -1], [1, 1] ]
 XORys = [ -1 if x[0] == x[1] else 1 for x in domain ]
 domain[:] = [ np.asmatrix(x) for x in domain ]
 
-print('XOR Function')
+print('\n\n###################\nXOR FUNCTION\n###################\n')
 mlp = MultiLayerPerceptron(0.1, tanh, tanhPrime, 2, [4, 2], 1,  a=1e-7, b=1e-4)
-mlp.train(domain, XORys, epochs=2000, minError=1e-3, adaptative=True)
+mlp.train(domain, XORys, minError=1e-3, adaptative=True)
 
 for i in range(len(domain)):
-    print('X:', domain[i], 'Prediction:', mlp.classify(domain[i]), 'Actual Value:', XORys[i])
+    print('X:', domain[i], 'Prediction:', mlp.classify(domain[i]).item((0, 0)), 'Actual Value:', XORys[i])
 
 #-----------------------------------------------------#
 # PRIMES
 #
+
+def printNumber(numMatrix):
+    for i in range(numMatrix.shape[0]):
+        for j in range(numMatrix.shape[1]):
+            print('%.0g' % (numMatrix.item((i, j))) if numMatrix.item((i, j)) == 1 else ' ', end='')
+        print()
 
 numbers = {}
 
@@ -43,13 +49,14 @@ y = [ 1 if index == 2 or index == 3 or index == 5 or index == 7 else -1 for inde
 #     if index == 2 or index == 3 or index == 5 or index == 7
 #     else np.asmatrix([1 if i % 2 == 1 else -1 for i in range(10)]) for index, x in enumerate(X) ]
 
-print('Prime Classifier')
+print('\n\n###################\nPRIME CLASSIFIER\n###################\n')
 mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
 mlp.train(X, y, minError=1e-4, adaptative=True)
 
 for i in range(len(X)):
-    print('X:\n', X[i].reshape(7, 5))
-    print('Prediction:', mlp.classify(X[i]), 'Actual Value:', y[i])
+    printNumber(X[i].reshape(7, 5))
+    # print('X:\n', X[i].reshape(7, 5))
+    print('Prediction:', mlp.classify(X[i]).item((0, 0)), 'Actual Value:', y[i])
 
 #-----------------------------------------------------#
 # PRIMES - TRAINING & TEST SETS
@@ -67,19 +74,21 @@ trainingX[:] = [x[0] for x in trainingX]
 testY = [x[1] for x in testX]
 testX[:] = [x[0] for x in testX]
 
-print('Prime Training')
+print('\n\n######################################\nPRIME CLASSIFIER WITH TRAINING AND TEST SET\n######################################\n')
 mlp = MultiLayerPerceptron(0.01, tanh, tanhPrime, 35, [10, 4, 2], 1,  a=1e-7, b=1e-4, backProp=ct.BP_NO_PRIME)
+print('######################################\nRESULTS FOR TRAINING SET:\n######################################\n')
 mlp.train(trainingX, trainingY, minError=1e-4, adaptative=True)
 
-print('Results for Training Set:')
 for i in range(len(trainingX)):
-    print('X:\n', trainingX[i].reshape(7, 5))
-    print('Prediction:', mlp.classify(trainingX[i]), 'Actual Value:', trainingY[i])
+    printNumber(trainingX[i].reshape(7, 5))
+    # print('X:\n', trainingX[i].reshape(7, 5))
+    print('Prediction:', mlp.classify(trainingX[i]).item((0, 0)), 'Actual Value:', trainingY[i])
 
-print('Results for Test Set:')
+print('######################################\nRESULTS FOR TEST SET:\n######################################\n')
 for i in range(len(testX)):
-    print('X:\n', testX[i].reshape(7, 5))
-    print('Prediction:', mlp.classify(testX[i]), 'Actual Value:', testY[i])
+    printNumber(testX[i].reshape(7, 5))    
+    # print('X:\n', testX[i].reshape(7, 5))
+    print('Prediction:', mlp.classify(testX[i]).item((0, 0)), 'Actual Value:', testY[i])
 
 #-----------------------------------------------------#
 # LEER CADA LINEA DEL CONJUNTO CARACTERIZANDOLA SEGUN EL ULTIMO BIT
