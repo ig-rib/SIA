@@ -20,8 +20,9 @@ xorSimplePer.train(XorX, 0.5, 0.0)
 orSimplePer.train(OrX, 0.5, 0.0)
 def printResults(functionVector, perceptron):
     worked = True
+    print(f'\tDomain\t\tPredicted\tActual')
     for x in functionVector:
-        print('\t', x[0], perceptron.classify(x[0]), f'(valor real es {x[1]})')
+        print('\t', x[0], '\t', perceptron.classify(x[0]), '\t\t', f'{x[1]}')
         worked = worked and perceptron.classify(x[0]) == x[1]
     print(f'w = {perceptron.w}')
     print('OK') if worked else print('Not OK')
@@ -44,12 +45,12 @@ def plotLine(perceptron, functionVector, title):
     print(f'{slope}*x + {intercept}')
 
 
-print('Función AND...\nResultados: ')
+print('AND Function...\nResults: ')
 printResults(AndX, andSimplePer)
 plotLine(andSimplePer, AndX, 'AND')
-print('\n\nFunción XOR...\nResultados: ')
+print('\n\nXOR Function...\nResults: ')
 printResults(XorX, xorSimplePer)
 plotLine(xorSimplePer, XorX, 'XOR')
-print('\n\nFunción OR...\nResultados: ')
+print('\n\nOR Function...\nResults: ')
 printResults(OrX, orSimplePer)
 plotLine(orSimplePer, OrX, 'OR')
