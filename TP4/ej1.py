@@ -15,11 +15,11 @@ _data = pd.DataFrame(_data['Country']).join(data)
 headers = list(_data.columns)
 D = data.values
 
-numberOfNeurons = int(1*math.sqrt(len(D)))
+numberOfNeurons = int(8)
 weightsVectorLength = len(headers)-1
 
 kn = KohonenNetwork(weightsVectorLength, numberOfNeurons)
-kn.train(D, 100)
+kn.train(D, 10000)
 
 for index in range(len(D)):
     print('Class: ', kn.getClass(D[index]), _data['Country'][index])
