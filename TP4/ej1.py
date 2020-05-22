@@ -21,26 +21,26 @@ D = data.values
 ## PART 1 - Kohonen
 ####################################
 
-# numberOfNeurons = int(10)
-# weightsVectorLength = len(headers)-1
+numberOfNeurons = int(4)
+weightsVectorLength = len(headers)-1
 
-# kn = KohonenNetwork(weightsVectorLength, numberOfNeurons)
-# kn.train(D, 10000)
+kn = KohonenNetwork(weightsVectorLength, numberOfNeurons)
+kn.train(D, 1000)
 
-# for index in range(len(D)):
-#     print('Class: ', kn.getClass(D[index]), _data['Country'][index])
+for index in range(len(D)):
+    print('Class: ', kn.getClass(D[index]), _data['Country'][index])
 
 ####################################
 ## PART 2 - PCA with Oja's Rule
 ####################################
 
 # Centering numbers around zero
-nullCenteredPlainNumbers = justPlainNumbers - justPlainNumbers.mean()
-neu = OjasRuleNeuron(D.shape[1])
-neu.r = 1e-3
-neu.train(D, 10000)
-print(neu.w)
+# nullCenteredPlainNumbers = justPlainNumbers - justPlainNumbers.mean()
+# neu = OjasRuleNeuron(D.shape[1])
+# neu.r = 1e-3
+# neu.train(D, 10000)
+# print(neu.w)
 
-pca = PCA()
-pca.fit(D)
-print(pca.components_[0])
+# pca = PCA()
+# pca.fit(D)
+# print(pca.components_[0])
