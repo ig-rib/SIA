@@ -20,7 +20,7 @@ D = data.values
 ## PART 1 - Kohonen
 ####################################
 
-side = 5
+side = 7
 
 numberOfNeurons = int(side ** 2)
 weightsVectorLength = len(headers)-1
@@ -42,11 +42,11 @@ print(map)
 for i in range(side):
     for j in range(side):
         if map.get(Coord(x=i, y=j)) == None:
-            print('\t\t', end='')
+            print(['---'], end='\t\t')
         else:
             print(map[Coord(x=i, y=j)], end='')
             if len(map[Coord(x=i, y=j)]) <= 3:
-                for ii in range(3-len(map[(i, j)])):
+                for ii in range(3-len(map[Coord(x=i, y=j)])):
                     print('\t', end='')
         print(' | ', end='')
     print()
