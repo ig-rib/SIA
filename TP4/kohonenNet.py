@@ -29,12 +29,18 @@ class KohonenNetwork:
     ## which is the same as for weight vectors
     ## M is the number of nodes
     ## 
-    def __init__(self, vectorDimension, M):
+    def __init__(self, vectorDimension, M, D, randomWeights=False):
         self.vDim = vectorDimension
         self.M = M
-        self.W = np.asmatrix(np.random.random(size=(M, vectorDimension)))
-        self.L = math.sqrt(M) # The side of the square
+        if randomWeights:
+            self.W = np.asmatrix(np.random.random(size=(M, vectorDimension)))
+        else:
+            self.W = np.array([])
+            idx = np.random.randint(D.shape[0], size = M)
+            self.W = D[idx, :]
 
+        self.L = math.sqrt(M) # The side of the square
+    
     def train(self, D, lda, R=3):
         indices = list(range(D.shape[0]))
         it = 0
