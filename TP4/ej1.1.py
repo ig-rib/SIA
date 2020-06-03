@@ -30,7 +30,7 @@ side = 6
 numberOfNeurons = int(side ** 2)
 weightsVectorLength = len(headers)-1
 
-kn = KohonenNetwork(weightsVectorLength, numberOfNeurons, D, randomWeights=False)
+kn = KohonenNetwork(weightsVectorLength, numberOfNeurons, D, randomWeights=True)
 kn.train(D, 5000, R=8)
 
 map = {}

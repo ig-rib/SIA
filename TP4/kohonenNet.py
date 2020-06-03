@@ -44,18 +44,22 @@ class KohonenNetwork:
     def train(self, D, lda, R=3):
         indices = list(range(D.shape[0]))
         it = 0
+        activationCounts = {i : 0 for i in range(self.L**2)}
         while it < lda:
             random.shuffle(indices)
             for index in indices:
                 curr = D[index]
                 distances = [ [np.linalg.norm(curr - x), i] for i, x in enumerate(self.W) ]
                 minIndex = min(distances, key=lambda x: x[0])[1]
+                activationCounts[minIndex]+=1
                 for rowNo in range(self.W.shape[0]):
                     if theta(minIndex, rowNo, it, self.L, R) > 0:
                         self.W[rowNo] = self.W[rowNo] + theta(minIndex, rowNo, it, self.L, R) * alpha(it, lda) * (curr - self.W[rowNo])
                 if it % (lda*.1) == 0 and R > 1:
                     R -= 1
                 it+=1
+        return activationCounts
+        
     def getClass(self, vector):
         distances = [ [np.linalg.norm(vector - x), i] for i, x in enumerate(self.W) ]
         neuronNo = min(distances, key=lambda x: x[0])[1]
