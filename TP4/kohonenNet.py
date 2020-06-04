@@ -44,7 +44,7 @@ class KohonenNetwork:
     def train(self, D, lda, R=3):
         indices = list(range(D.shape[0]))
         it = 0
-        activationCounts = {i : 0 for i in range(self.L**2)}
+        activationCounts = {i : 0 for i in range(self.M)}
         while it < lda:
             random.shuffle(indices)
             for index in indices:
