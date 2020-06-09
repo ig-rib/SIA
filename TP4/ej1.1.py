@@ -31,7 +31,7 @@ numberOfNeurons = int(side ** 2)
 weightsVectorLength = len(headers)-1
 
 kn = KohonenNetwork(weightsVectorLength, numberOfNeurons, D, randomWeights=True)
-kn.train(D, 5000, R=8)
+activations = kn.train(D, 5000, R=8)
 
 map = {}
 
@@ -40,7 +40,7 @@ for index in range(len(D)):
     if map.get(countryClass) == None:
         map[countryClass] = []
     map[countryClass].append(_data['Country'][index][0:3])
-    # print('Class: ', kn.getClass(D[index]), _data['Country'][index])
+    print(kn.getClass(D[index]), _data['Country'][index])
 
 print(map)
 
@@ -55,3 +55,5 @@ for i in range(side):
                     print('\t', end='')
         print(' | ', end='')
     print()
+
+print(activations)
