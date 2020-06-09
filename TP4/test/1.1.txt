@@ -1,0 +1,35 @@
+Coord(x=2.0, y=2.0) Austria
+Coord(x=2.0, y=2.0) Belgium
+Coord(x=3.0, y=5.0) Bulgaria
+Coord(x=3.0, y=3.0) Croatia
+Coord(x=1.0, y=3.0) Czech Republic
+Coord(x=2.0, y=2.0) Denmark
+Coord(x=3.0, y=5.0) Estonia
+Coord(x=5.0, y=1.0) Finland
+Coord(x=5.0, y=0.0) Germany
+Coord(x=4.0, y=4.0) Greece
+Coord(x=1.0, y=4.0) Hungary
+Coord(x=0.0, y=2.0) Iceland
+Coord(x=0.0, y=2.0) Ireland
+Coord(x=4.0, y=1.0) Italy
+Coord(x=1.0, y=5.0) Latvia
+Coord(x=0.0, y=5.0) Lithuania
+Coord(x=0.0, y=0.0) Luxembourg
+Coord(x=2.0, y=1.0) Netherlands
+Coord(x=3.0, y=0.0) Norway
+Coord(x=2.0, y=4.0) Poland
+Coord(x=3.0, y=3.0) Portugal
+Coord(x=0.0, y=4.0) Slovakia
+Coord(x=1.0, y=3.0) Slovenia
+Coord(x=5.0, y=3.0) Spain
+Coord(x=5.0, y=0.0) Sweden
+Coord(x=1.0, y=1.0) Switzerland
+Coord(x=5.0, y=5.0) Ukraine
+Coord(x=4.0, y=2.0) United Kingdom
+{Coord(x=2.0, y=2.0): ['Aus', 'Bel', 'Den'], Coord(x=3.0, y=5.0): ['Bul', 'Est'], Coord(x=3.0, y=3.0): ['Cro', 'Por'], Coord(x=1.0, y=3.0): ['Cze', 'Slo'], Coord(x=5.0, y=1.0): ['Fin'], Coord(x=5.0, y=0.0): ['Ger', 'Swe'], Coord(x=4.0, y=4.0): ['Gre'], Coord(x=1.0, y=4.0): ['Hun'], Coord(x=0.0, y=2.0): ['Ice', 'Ire'], Coord(x=4.0, y=1.0): ['Ita'], Coord(x=1.0, y=5.0): ['Lat'], Coord(x=0.0, y=5.0): ['Lit'], Coord(x=0.0, y=0.0): ['Lux'], Coord(x=2.0, y=1.0): ['Net'], Coord(x=3.0, y=0.0): ['Nor'], Coord(x=2.0, y=4.0): ['Pol'], Coord(x=0.0, y=4.0): ['Slo'], Coord(x=5.0, y=3.0): ['Spa'], Coord(x=1.0, y=1.0): ['Swi'], Coord(x=5.0, y=5.0): ['Ukr'], Coord(x=4.0, y=2.0): ['Uni']}
+['Lux']		 | ['---']		 | ['Ice', 'Ire']	 | ['---']		 | ['Slo']		 | ['Lit']		 | 
+['---']		 | ['Swi']		 | ['---']		 | ['Cze', 'Slo']	 | ['Hun']		 | ['Lat']		 | 
+['---']		 | ['Net']		 | ['Aus', 'Bel', 'Den'] | ['---']		 | ['Pol']		 | ['---']		 | 
+['Nor']		 | ['---']		 | ['---']		 | ['Cro', 'Por']	 | ['---']		 | ['Bul', 'Est']	 | 
+['---']		 | ['Ita']		 | ['Uni']		 | ['---']		 | ['Gre']		 | ['---']		 | 
+['Ger', 'Swe']	 | ['Fin']		 | ['---']		 | ['Spa']		 | ['---']		 | ['Ukr']		 | 
