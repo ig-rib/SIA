@@ -3,18 +3,12 @@
 import numpy as np
 import multiLayerPerceptron as MLP
 import constants as ct
-from sklearn.decomposition import PCA
 from copy import deepcopy
 import random as rd
+from utils import printNumber
 
 
 setFileLines = open('TP3/ej3Conjunto.tsv').readlines()
-
-def printNumber(numMatrix):
-    for i in range(numMatrix.shape[0]):
-        for j in range(numMatrix.shape[1]):
-            print('%.0g' % 1 if numMatrix.item((i, j)) > 0.5 else '_', end='') #(numMatrix.item((i, j)))
-        print()
 
 # percentage of the set to consider for learning
 lp = .25
