@@ -5,6 +5,7 @@ import multiLayerPerceptron as MLP
 import constants as ct
 from sklearn.decomposition import PCA
 from copy import deepcopy
+import random as rd
 
 
 setFileLines = open('TP3/ej3Conjunto.tsv').readlines()
@@ -15,12 +16,17 @@ def printNumber(numMatrix):
             print('%.0g' % 1 if numMatrix.item((i, j)) > 0.5 else '_', end='') #(numMatrix.item((i, j)))
         print()
 
+# percentage of the set to consider for learning
+lp = .25
+# number of elements in feature space
 nComp = 24
+# number of rows to represent elements from feature space
 latRows = 6
+# number of columns to represent elements from feature space 
 latCols = 4
 
 # 1) Pasar a 2d: Se convierten los enteros a arrays de bits (quedan ejemplos de 7x8, que se pasan a 56x1 para el autoencoder)
-font1m = np.asmatrix(np.array(ct.font1b))
+font1m = np.asmatrix(np.array(rd.sample(ct.font1b, int(len(ct.font1b)*lp))))
 # 2) Optimizaciones: sacar el término g'
 mlp1 = MLP.MultiLayerPerceptron(0.01, MLP.tanh, MLP.tanhPrime, 56, [nComp], 56, backProp=ct.BP_NO_PRIME)
 numberOfLayers = len(mlp1.wByLayer.keys())
@@ -29,8 +35,10 @@ mlp1.train(font1m, font1m, epochs=2500)
 # 3)
 for i in range(font1m.shape[0]):
     # print(mlp.getLayerOutput(font1m[i], 1))
+    print('Original')
     printNumber(font1m[i].reshape(7, 8))
     print()
+    print('In feature space (middle layer)')
     printNumber(mlp1.getLayerOutput(font1m[i], numberOfLayers//2).reshape(latRows,latCols))
     print()
     # printNumber(mlp1.getLayerOutput(font1m[i], 2).reshape(7, 8))
@@ -38,14 +46,17 @@ for i in range(font1m.shape[0]):
     print()
 
 # 4)
-print("\nNuevas muestras generadas\n")
-import random as rd
-lat1 = np.asmatrix(np.array([1 if rd.random() > 0.5 else -1 for i in range(nComp)]))
+print("\nGenerated samples\n")
+for i in range(5):
+    lat1 = np.asmatrix(np.array([1 if rd.random() > 0.5 else -1 for i in range(nComp)]))
 
-lat1Out = mlp1.forwardPropagateFromLayer(lat1, numberOfLayers//2+1)
-printNumber(lat1.reshape(latRows,latCols))
-print()
-printNumber(lat1Out.reshape(7,8))
+    lat1Out = mlp1.forwardPropagateFromLayer(lat1, numberOfLayers//2+1)
+    print('In feature space')
+    printNumber(lat1.reshape(latRows,latCols))
+    print()
+    print('Output (generated sample)')
+    printNumber(lat1Out.reshape(7,8))
+    print('\n\n')
 
 ######
 # b)
@@ -64,14 +75,9 @@ def addNoiseEverywhere(letter, rate):
 
 # 2)
 
-# Ruido 5%
-font1m5 = [addNoiseEverywhere(letter, 0.05) for letter in deepcopy(font1m)]
-# Ruido 15%
-font1m15 = [addNoiseEverywhere(letter, 0.15) for letter in deepcopy(font1m)]
-# Ruido 25%
-font1m25 = [addNoiseEverywhere(letter, 0.25) for letter in deepcopy(font1m)]
-
-noisySamples = {0.05: font1m5, 0.15: font1m15, 0.25: font1m25}
+noisySamples = {
+                r : [addNoiseEverywhere(letter, r) for letter in deepcopy(font1m)] for r in [.05, .15, .25]
+                }
 
 ## Utility function for plotting input-output given sample noise
 def plotForPercentage(r):
@@ -85,7 +91,7 @@ def plotForPercentage(r):
         print()
         # printNumber(mlp1.getLayerOutput(font1m[i], 1).reshape(latRows,latCols))
         print('Autoencoder output')
-        printNumber(mlp1.getLayerOutput(font1m[i], numberOfLayers).reshape(7, 8))
+        printNumber(mlp1.getLayerOutput(noisySamples[r][i], numberOfLayers).reshape(7, 8))
         print()
         print()
 
