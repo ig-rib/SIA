@@ -172,3 +172,12 @@ class MultiLayerPerceptron:
             out = self.g(np.matmul(out, self.wByLayer[layerNo]) + self.bByLayer[layerNo])
             if layer == layerNo:
                 return out
+
+    def forwardPropagateFromLayer(self, x, layer):
+        out = x
+        keys = self.wByLayer.keys()
+        if layer < min(keys) or layer > max(keys):
+            return None
+        for layerNo in [key for key in keys if key >= layer]:
+            out = self.g(np.matmul(out, self.wByLayer[layerNo]) + self.bByLayer[layerNo])
+        return out
