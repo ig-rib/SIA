@@ -111,8 +111,8 @@ Font3 = [
 ]
 
 def bitfield(n):
-    return [int(digit) for digit in format(n, '#010b')[2:]] # [2:] to chop off the "0b" part 
+    return [int(digit) for digit in format(n, '#07b')[2:]] # [2:] to chop off the "0b" part 
 
-font1b = list(map(lambda x: np.array([[1 if y == 1 else -1 for y in bitfield(n)] for n in x]).reshape(56,), Font1))
-font2b = list(map(lambda x: np.array([[1 if y == 1 else -1 for y in bitfield(n)] for n in x]).reshape(56,), Font2))
-font3b = list(map(lambda x: np.array([[1 if y == 1 else -1 for y in bitfield(n)] for n in x]).reshape(56,), Font3))
+font1b = list(map(lambda x: np.array([[1 if y == 1 else -1 for y in bitfield(n)] for n in x]).reshape(35,), Font1))
+font2b = list(map(lambda x: np.array([[1 if y == 1 else -1 for y in bitfield(n)] for n in x]).reshape(35,), Font2))
+font3b = list(map(lambda x: np.array([[1 if y == 1 else -1 for y in bitfield(n)] for n in x]).reshape(35,), Font3))

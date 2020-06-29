@@ -9,14 +9,14 @@ from utils import printNumber
 # percentage of the set to consider for learning
 lp = .3
 # number of elements in feature space
-nComp = 24
+nComp = 2
 # number of rows to represent elements from feature space
-latRows = 6
+latRows = 1
 # number of columns to represent elements from feature space 
-latCols = 4
+latCols = 2
 
 font2m = np.asmatrix(np.array(rd.sample(ct.font2b, int(len(ct.font2b)*lp))))
-mlp1 = MLP.MultiLayerPerceptron(0.01, MLP.tanh, MLP.tanhPrime, 56, [nComp], 56, backProp=ct.BP_NO_PRIME)
+mlp1 = MLP.MultiLayerPerceptron(0.01, MLP.tanh, MLP.tanhPrime, 35, [nComp], 35, backProp=ct.BP_NO_PRIME)
 numberOfLayers = len(mlp1.wByLayer.keys())
 mlp1.train(font2m, font2m, epochs=2500)
 
@@ -32,5 +32,5 @@ for i in range(len(font2m)):
     printNumber(lat1.reshape(latRows,latCols))
     print()
     print('Output (generated sample)')
-    printNumber(lat1Out.reshape(7,8))
+    printNumber(lat1Out.reshape(7,5))
     print('\n\n')

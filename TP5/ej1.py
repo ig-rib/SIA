@@ -7,34 +7,46 @@ from copy import deepcopy
 import random as rd
 from utils import printNumber
 
+from sklearn.decomposition import PCA
 
-setFileLines = open('TP3/ej3Conjunto.tsv').readlines()
+
+# setFileLines = open('TP3/ej3Conjunto.tsv').readlines()
+
+
 
 # percentage of the set to consider for learning
-lp = .25
+lp = .125
 # number of elements in feature space
-nComp = 24
+nComp = 2
 # number of rows to represent elements from feature space
-latRows = 6
+latRows = 1
 # number of columns to represent elements from feature space 
-latCols = 4
+latCols = 2
 
 # 1) Pasar a 2d: Se convierten los enteros a arrays de bits (quedan ejemplos de 7x8, que se pasan a 56x1 para el autoencoder)
 font1m = np.asmatrix(np.array(rd.sample(ct.font1b, int(len(ct.font1b)*lp))))
 # 2) Optimizaciones: sacar el término g'
-mlp1 = MLP.MultiLayerPerceptron(0.01, MLP.tanh, MLP.tanhPrime, 56, [nComp], 56, backProp=ct.BP_NO_PRIME)
+mlp1 = MLP.MultiLayerPerceptron(0.01, MLP.tanh, MLP.tanhPrime, 35, [nComp], 35, backProp=ct.BP_NO_PRIME)
 numberOfLayers = len(mlp1.wByLayer.keys())
 mlp1.train(font1m, font1m, epochs=2500)
+
+# pca = PCA(24)
+# pca.fit(font1m)
+
+# font1mTransformed = pca.transform(font1m)
 
 # 3)
 for i in range(font1m.shape[0]):
     # print(mlp.getLayerOutput(font1m[i], 1))
     print('Original')
-    printNumber(font1m[i].reshape(7, 8))
+    printNumber(font1m[i].reshape(7, 5))
     print()
     print('In feature space (actual array)')
     print(mlp1.getLayerOutput(font1m[i], numberOfLayers//2).reshape(latRows,latCols))
     print()
+    # print('PCA (actual array)')
+    # print(font1mTransformed[i].reshape(latRows, latCols))
+    # print()
     print('In feature space (2d representation)')
     printNumber(mlp1.getLayerOutput(font1m[i], numberOfLayers//2).reshape(latRows,latCols))
     print()
@@ -56,7 +68,7 @@ for i in range(5):
     printNumber(lat1.reshape(latRows,latCols))
     print()
     print('Output (generated sample)')
-    printNumber(lat1Out.reshape(7,8))
+    printNumber(lat1Out.reshape(7,5))
     print('\n\n')
 
 ######
@@ -85,14 +97,14 @@ def plotForPercentage(r):
     for i in range(font1m.shape[0]):
         # print(mlp.getLayerOutput(font1m[i], 1))
         print('Original input')
-        printNumber(font1m[i].reshape(7, 8))
+        printNumber(font1m[i].reshape(7, 5))
         print()
         print(f'Noisy input {r}:')
-        printNumber(noisySamples[r][i].reshape(7, 8))
+        printNumber(noisySamples[r][i].reshape(7, 5))
         print()
         # printNumber(mlp1.getLayerOutput(font1m[i], 1).reshape(latRows,latCols))
         print('Autoencoder output')
-        printNumber(mlp1.getLayerOutput(noisySamples[r][i], numberOfLayers).reshape(7, 8))
+        printNumber(mlp1.getLayerOutput(noisySamples[r][i], numberOfLayers).reshape(7, 5))
         print()
         print()
 
