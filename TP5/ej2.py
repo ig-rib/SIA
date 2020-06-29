@@ -22,10 +22,13 @@ mlp1.train(font2m, font2m, epochs=2500)
 
 print("\nGenerated samples\n")
 for i in range(len(font2m)):
-    lat1 = np.asmatrix(np.array([1 if rd.random() > 0.5 else -1 for i in range(nComp)]))
+    lat1 = np.asmatrix(np.array([rd.random() * 2 -1 for i in range(nComp)]))
 
     lat1Out = mlp1.forwardPropagateFromLayer(lat1, numberOfLayers//2+1)
-    print('In feature space')
+    print('In feature space (actual array)')
+    print(lat1)
+    print()
+    print('In feature space (binary representation)')
     printNumber(lat1.reshape(latRows,latCols))
     print()
     print('Output (generated sample)')
