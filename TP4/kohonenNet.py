@@ -21,7 +21,11 @@ def theta(i, j, s, L, R=2):
 
 # def theta2(i, j, D, R=2):
 
-Coord = namedtuple('Coord', ['x', 'y'])
+# Coord = namedtuple('Coord', ['x', 'y'])
+
+
+## Implements a square Kohonen Net
+## using euclidean distance between nodes
 
 class KohonenNetwork:
 
@@ -41,6 +45,12 @@ class KohonenNetwork:
 
         self.L = math.sqrt(M) # The side of the square
     
+    ## D is an np.array of samples
+    ## lda (lambda) is the number of iterations
+    ## R is the initial radius of neighbourhood
+    ## Example: given neuron N1 at P1=(i1, j1) in the grid; neuron N2
+    ## at P2=(i2, j2), they are only neighbours if norm2(P1-P2) <= R
+
     def train(self, D, lda, R=3):
         indices = list(range(D.shape[0]))
         it = 0
@@ -63,4 +73,5 @@ class KohonenNetwork:
     def getClass(self, vector):
         distances = [ [np.linalg.norm(vector - x), i] for i, x in enumerate(self.W) ]
         neuronNo = min(distances, key=lambda x: x[0])[1]
-        return Coord(x=neuronNo // self.L, y=neuronNo % self.L)
+        return (neuronNo // self.L, neuronNo % self.L)
+        # return Coord(x=neuronNo // self.L, y=neuronNo % self.L)
