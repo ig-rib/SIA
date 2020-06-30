@@ -1,0 +1,898 @@
+Number of epochs 2500 
+Error 1.097870881563389
+Original
+_____
+_____
+11111
+_____
+11111
+_____
+_____
+
+In feature space (actual array)
+[[ 1. -1.]]
+
+In feature space (2d representation)
+1_
+
+
+
+Original
+_111_
+1___1
+____1
+___1_
+__1__
+_____
+__1__
+
+In feature space (actual array)
+[[-1.  1.]]
+
+In feature space (2d representation)
+_1
+
+
+
+Original
+_1___
+__1__
+___1_
+____1
+___1_
+__1__
+_1___
+
+In feature space (actual array)
+[[-1. -1.]]
+
+In feature space (2d representation)
+__
+
+
+
+Original
+_111_
+1___1
+____1
+__11_
+____1
+1___1
+_111_
+
+In feature space (actual array)
+[[-1.  1.]]
+
+In feature space (2d representation)
+_1
+
+
+
+Original
+11111
+____1
+___1_
+__1__
+_1___
+_1___
+_1___
+
+In feature space (actual array)
+[[-1.          0.02379401]]
+
+In feature space (2d representation)
+_1
+
+
+
+Original
+_____
+_____
+_____
+_____
+_____
+_11__
+_11__
+
+In feature space (actual array)
+[[-0.32191951 -1.        ]]
+
+In feature space (2d representation)
+__
+
+
+
+Original
+__1__
+_1111
+1_1__
+_111_
+__1_1
+1111_
+__1__
+
+In feature space (actual array)
+[[1. 1.]]
+
+In feature space (2d representation)
+11
+
+
+
+Original
+_1___
+__1__
+___1_
+___1_
+___1_
+__1__
+_1___
+
+In feature space (actual array)
+[[-1. -1.]]
+
+In feature space (2d representation)
+__
+
+
+
+
+Generated samples
+
+In feature space (actual array)
+[[0.97140075 0.05037264]]
+
+In feature space (2d representation)
+11
+
+Output (generated sample)
+__1__
+____1
+1_1_1
+___1_
+__1_1
+_11__
+__1__
+
+
+
+In feature space (actual array)
+[[-0.69416574  0.97936415]]
+
+In feature space (2d representation)
+_1
+
+Output (generated sample)
+_111_
+1___1
+____1
+__11_
+__1_1
+_____
+__1__
+
+
+
+In feature space (actual array)
+[[ 0.05864641 -0.41709469]]
+
+In feature space (2d representation)
+1_
+
+Output (generated sample)
+_____
+_____
+___1_
+_____
+_____
+__1__
+_1___
+
+
+
+In feature space (actual array)
+[[0.40318344 0.91094636]]
+
+In feature space (2d representation)
+11
+
+Output (generated sample)
+_111_
+____1
+____1
+__11_
+__1_1
+11___
+__1__
+
+
+
+In feature space (actual array)
+[[0.59499555 0.00998567]]
+
+In feature space (2d representation)
+11
+
+Output (generated sample)
+__1__
+____1
+1_1__
+___1_
+__1_1
+__1__
+__1__
+
+
+
+Original input
+_____
+_____
+11111
+_____
+11111
+_____
+_____
+
+Noisy input 0.05:
+_____
+_____
+11111
+_____
+11111
+_____
+___1_
+
+Autoencoder output
+_____
+__1__
+1111_
+_____
+11111
+__1__
+_____
+
+
+Original input
+_111_
+1___1
+____1
+___1_
+__1__
+_____
+__1__
+
+Noisy input 0.05:
+_111_
+1___1
+__1_1
+___1_
+__1__
+_____
+__1__
+
+Autoencoder output
+__1__
+_1_11
+1_1_1
+_111_
+__1_1
+11_1_
+__1__
+
+
+Original input
+_1___
+__1__
+___1_
+____1
+___1_
+__1__
+_1___
+
+Noisy input 0.05:
+_1___
+__1__
+_____
+____1
+___1_
+__1__
+_1___
+
+Autoencoder output
+_1___
+_____
+___1_
+_____
+___1_
+__1__
+_1___
+
+
+Original input
+_111_
+1___1
+____1
+__11_
+____1
+1___1
+_111_
+
+Noisy input 0.05:
+_111_
+1___1
+____1
+__11_
+____1
+1___1
+_1111
+
+Autoencoder output
+_111_
+1___1
+____1
+__11_
+_____
+_____
+_11__
+
+
+Original input
+11111
+____1
+___1_
+__1__
+_1___
+_1___
+_1___
+
+Noisy input 0.05:
+11111
+____1
+_1_1_
+__1__
+_1___
+_1___
+_1___
+
+Autoencoder output
+_1___
+_____
+___1_
+_____
+___1_
+__1__
+_1___
+
+
+Original input
+_____
+_____
+_____
+_____
+_____
+_11__
+_11__
+
+Noisy input 0.05:
+_____
+_____
+_____
+_____
+_____
+__1__
+_11__
+
+Autoencoder output
+_____
+__1__
+1111_
+_____
+11111
+__1__
+_____
+
+
+Original input
+__1__
+_1111
+1_1__
+_111_
+__1_1
+1111_
+__1__
+
+Noisy input 0.05:
+__1__
+_1111
+111__
+_111_
+__1_1
+1111_
+__1__
+
+Autoencoder output
+__1__
+_1_11
+1_1_1
+_111_
+__1_1
+11_1_
+__1__
+
+
+Original input
+_1___
+__1__
+___1_
+___1_
+___1_
+__1__
+_1___
+
+Noisy input 0.05:
+_1___
+__1__
+___1_
+___1_
+__11_
+__1__
+_1___
+
+Autoencoder output
+_____
+__1__
+1111_
+_____
+11111
+__1__
+_____
+
+
+Original input
+_____
+_____
+11111
+_____
+11111
+_____
+_____
+
+Noisy input 0.15:
+_____
+_____
+11111
+_1___
+11111
+_11__
+_1__1
+
+Autoencoder output
+_____
+__1__
+1111_
+_____
+11111
+__1__
+_____
+
+
+Original input
+_111_
+1___1
+____1
+___1_
+__1__
+_____
+__1__
+
+Noisy input 0.15:
+_1_1_
+____1
+____1
+___1_
+1_11_
+_____
+__11_
+
+Autoencoder output
+__1__
+_1_11
+1_1_1
+_111_
+__1_1
+11_1_
+__1__
+
+
+Original input
+_1___
+__1__
+___1_
+____1
+___1_
+__1__
+_1___
+
+Noisy input 0.15:
+111_1
+_____
+___11
+____1
+___1_
+__1__
+_1___
+
+Autoencoder output
+_1___
+_____
+___1_
+_____
+___1_
+__1__
+_1___
+
+
+Original input
+_111_
+1___1
+____1
+__11_
+____1
+1___1
+_111_
+
+Noisy input 0.15:
+1111_
+_1__1
+1___1
+__11_
+1___1
+1___1
+_111_
+
+Autoencoder output
+_111_
+1___1
+____1
+__11_
+_____
+_____
+_11__
+
+
+Original input
+11111
+____1
+___1_
+__1__
+_1___
+_1___
+_1___
+
+Noisy input 0.15:
+111_1
+____1
+___11
+1_1__
+_1___
+1____
+_1___
+
+Autoencoder output
+_111_
+1___1
+____1
+__11_
+_____
+_____
+_11__
+
+
+Original input
+_____
+_____
+_____
+_____
+_____
+_11__
+_11__
+
+Noisy input 0.15:
+_____
+_____
+1___1
+___1_
+___1_
+_11__
+111__
+
+Autoencoder output
+_____
+__1__
+1111_
+_____
+11111
+__1__
+_____
+
+
+Original input
+__1__
+_1111
+1_1__
+_111_
+__1_1
+1111_
+__1__
+
+Noisy input 0.15:
+___1_
+_1111
+1_1__
+11___
+__1_1
+1111_
+__1__
+
+Autoencoder output
+__1__
+_1_11
+1_1_1
+_111_
+__1_1
+11_1_
+__1__
+
+
+Original input
+_1___
+__1__
+___1_
+___1_
+___1_
+__1__
+_1___
+
+Noisy input 0.15:
+_1___
+__1_1
+1_111
+___1_
+___1_
+_11__
+_1___
+
+Autoencoder output
+_____
+__1__
+1111_
+_____
+11111
+__1__
+_____
+
+
+Original input
+_____
+_____
+11111
+_____
+11111
+_____
+_____
+
+Noisy input 0.25:
+_11__
+__1__
+111_1
+__11_
+11111
+1__1_
+_____
+
+Autoencoder output
+_____
+__1__
+1111_
+_____
+11111
+__1__
+_____
+
+
+Original input
+_111_
+1___1
+____1
+___1_
+__1__
+_____
+__1__
+
+Noisy input 0.25:
+_11__
+1__11
+___1_
+___11
+__1__
+1__11
+__1__
+
+Autoencoder output
+__1__
+_1_11
+1_1_1
+_111_
+__1_1
+11_1_
+__1__
+
+
+Original input
+_1___
+__1__
+___1_
+____1
+___1_
+__1__
+_1___
+
+Noisy input 0.25:
+_11__
+__1__
+1__1_
+_1_11
+___1_
+_111_
+__1__
+
+Autoencoder output
+_____
+__1__
+1111_
+_____
+11111
+__1__
+_____
+
+
+Original input
+_111_
+1___1
+____1
+__11_
+____1
+1___1
+_111_
+
+Noisy input 0.25:
+11_1_
+11__1
+_1___
+__1__
+__1_1
+11__1
+_111_
+
+Autoencoder output
+_111_
+1___1
+____1
+__11_
+_____
+_____
+_11__
+
+
+Original input
+11111
+____1
+___1_
+__1__
+_1___
+_1___
+_1___
+
+Noisy input 0.25:
+111__
+11__1
+1____
+__1__
+_1___
+_____
+_1_1_
+
+Autoencoder output
+_111_
+1___1
+____1
+__11_
+_____
+_____
+_11__
+
+
+Original input
+_____
+_____
+_____
+_____
+_____
+_11__
+_11__
+
+Noisy input 0.25:
+_____
+__1_1
+_____
+1____
+__1_1
+_11_1
+1111_
+
+Autoencoder output
+__1__
+_1_11
+1_1_1
+_111_
+__1_1
+11_1_
+__1__
+
+
+Original input
+__1__
+_1111
+1_1__
+_111_
+__1_1
+1111_
+__1__
+
+Noisy input 0.25:
+1_11_
+_11_1
+1_1__
+_111_
+1__1_
+1111_
+1_1__
+
+Autoencoder output
+__1__
+_1_11
+1_1_1
+_111_
+__1_1
+11_1_
+__1__
+
+
+Original input
+_1___
+__1__
+___1_
+___1_
+___1_
+__1__
+_1___
+
+Noisy input 0.25:
+111_1
+__1__
+1__1_
+__1__
+___11
+_11__
+_1___
+
+Autoencoder output
+_1___
+_____
+___1_
+_____
+___1_
+__1__
+_1___
+
+
